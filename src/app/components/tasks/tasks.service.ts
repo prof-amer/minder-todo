@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksService extends HttpClient {
+  private api = environment.api;
 
   getTasks(){
-    return this.get('https://demo.minder.care/interview/task')
+    return this.get(this.api)
   }
 
 }
