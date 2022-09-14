@@ -95,7 +95,7 @@
               [cdkDropListData]="completed"
               class="list"
               (cdkDropListDropped)="drop($event, 'Completed')">
-              <div class="box" *ngFor="let task of completed; let i = index" cdkDrag>{{task.name}}
+              <div class="box completed" *ngFor="let task of completed; let i = index" cdkDrag>{{task.name}}
                 <div>
                   <button mat-icon-button color="warn" (click)="deleteTask(completed, i)">
                     <mat-icon>delete</mat-icon>
