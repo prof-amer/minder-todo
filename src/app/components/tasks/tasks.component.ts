@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksService } from './tasks.service';
 import { Task } from './Task'
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-tasks',
@@ -9,7 +10,10 @@ import { Task } from './Task'
 })
 export class TasksComponent implements OnInit {
   isLoading: boolean = false;
-  tasks: Task[] = [];
+  notStarted: Task[] = [];
+  inProgress: Task[] = [];
+  completed: Task[] = [];
+
 
   constructor(
     private tasksService: TasksService
@@ -19,11 +23,26 @@ export class TasksComponent implements OnInit {
     this.isLoading = true;
     this.tasksService.getTasks().subscribe(
       (response: Task[]) => {
-        this.tasks = response;
+        this.notStarted = response.filter(task => task.status === 'NotStarted');
+        this.inProgress = response.filter(task => task.status === 'InProgress');
+        this.completed = response.filter(task => task.status === 'Completed');
         this.isLoading = false;
-        console.log(this.tasks);
       }
     )
+  }
+
+  drop(event: CdkDragDrop<Task[]>, status: string) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+      event.container.data[event.currentIndex].status = status;
+    }
   }
 
 }
