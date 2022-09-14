@@ -56,11 +56,14 @@
               (cdkDropListDropped)="drop($event, 'NotStarted')">
               <div class="box" *ngFor="let task of notStarted; let i = index" cdkDrag>{{task.name}}
                 <div>
-                  <button mat-icon-button color="warn" (click)="deleteTask(notStarted, i)">
-                    <mat-icon>delete</mat-icon>
+                  <button mat-icon-button (click)="expandTask(notStarted, i)">
+                    <mat-icon>expand_more</mat-icon>
                   </button>
                   <button mat-icon-button color="primary" (click)="editTask(notStarted, i)">
                     <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="deleteTask(notStarted, i)">
+                    <mat-icon>delete</mat-icon>
                   </button>
                 </div>
               </div>
@@ -77,11 +80,14 @@
               (cdkDropListDropped)="drop($event, 'InProgress')">
               <div class="box" *ngFor="let task of inProgress; let i = index" cdkDrag>{{task.name}}
                 <div>
-                  <button mat-icon-button color="warn" (click)="deleteTask(inProgress, i)">
-                    <mat-icon>delete</mat-icon>
+                  <button mat-icon-button (click)="expandTask(inProgress, i)">
+                    <mat-icon>expand_more</mat-icon>
                   </button>
                   <button mat-icon-button color="primary" (click)="editTask(inProgress, i)">
                     <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="deleteTask(inProgress, i)">
+                    <mat-icon>delete</mat-icon>
                   </button>
                 </div></div>
             </div>
@@ -97,11 +103,14 @@
               (cdkDropListDropped)="drop($event, 'Completed')">
               <div class="box completed" *ngFor="let task of completed; let i = index" cdkDrag>{{task.name}}
                 <div>
-                  <button mat-icon-button color="warn" (click)="deleteTask(completed, i)">
-                    <mat-icon>delete</mat-icon>
+                  <button mat-icon-button (click)="expandTask(completed, i)">
+                    <mat-icon>expand_more</mat-icon>
                   </button>
                   <button mat-icon-button color="primary" (click)="editTask(completed, i)">
                     <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="deleteTask(completed, i)">
+                    <mat-icon>delete</mat-icon>
                   </button>
                 </div></div>
             </div>
