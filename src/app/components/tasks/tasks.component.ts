@@ -65,6 +65,14 @@ export class TasksComponent implements OnInit {
     }
   }
 
+  deleteTask(tasks: Task[],index: number){
+    tasks.splice(index, 1);
+  }
+
+  editTask(tasks: Task[],index: number){
+
+  }
+
   submitTask() {
     this.isLoading = true;
     const createdAt = new Date().toISOString();
