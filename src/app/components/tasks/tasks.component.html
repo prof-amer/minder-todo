@@ -1,1 +1,8 @@
-<p>tasks works!</p>
+<div *ngIf="!isLoading; else loadingTemplate">
+</div>
+
+<ng-template #loadingTemplate>
+  <div class="center">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
