@@ -109,6 +109,9 @@ export class TasksComponent implements OnInit {
       this.updateGroup[this.updateID] = {name, description, status, dueDate}
     }
     this.form.reset();
+    this.editMode = false;
+    this.updateID = undefined;
+    this.updateGroup = [];
     this.isLoading = false;
   }
 
