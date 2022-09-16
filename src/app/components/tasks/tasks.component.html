@@ -109,10 +109,10 @@
               cdkDropList
               [cdkDropListData]="completed"
               (cdkDropListDropped)="drop($event, 'Completed')">
-              <mat-accordion class="box completed" *ngFor="let task of completed; let i = index" cdkDrag>
+              <mat-accordion class="box" *ngFor="let task of completed; let i = index" cdkDrag>
                 <mat-expansion-panel class="d-flex flex-column">
                   <mat-expansion-panel-header>
-                    <mat-panel-title>
+                    <mat-panel-title class="completed">
                       {{task.name}}
                     </mat-panel-title>
                     <button mat-icon-button color="primary" (click)="editTask(completed, i)">
