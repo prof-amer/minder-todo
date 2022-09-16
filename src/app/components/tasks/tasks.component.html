@@ -1,6 +1,6 @@
 <div *ngIf="!isLoading; else loadingTemplate">
 
-  <form [formGroup]="form" (ngSubmit)="submit(formDirective)" #formDirective="ngForm">
+  <form [formGroup]="form" (ngSubmit)="submit()">
     <div>
       <mat-form-field class="m-2">
         <mat-label>Name</mat-label>

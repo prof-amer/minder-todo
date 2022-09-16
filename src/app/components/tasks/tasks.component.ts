@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksService } from './tasks.service';
 import { Task } from './Task'
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import * as moment from 'moment';
 
@@ -50,9 +50,9 @@ export class TasksComponent implements OnInit {
     });
   }
 
-  submit(formDirective: FormGroupDirective) {
+  submit() {
     this.submitTask();
-    formDirective.resetForm();
+    this.form.reset()
   }
 
   drop(event: CdkDragDrop<Task[]>, status: string) {
@@ -108,6 +108,7 @@ export class TasksComponent implements OnInit {
       console.log(this.updateGroup[this.updateID])
       this.updateGroup[this.updateID] = {name, description, status, dueDate}
     }
+    this.form.reset();
     this.isLoading = false;
   }
 
