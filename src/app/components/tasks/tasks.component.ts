@@ -72,6 +72,7 @@ export class TasksComponent implements OnInit {
   }
 
   onEdit(tasks: Task[], index: number) {
+    this.editMode = true;
     const {name, description, status, dueDate} = tasks[index]
     if (dueDate) {
       const newDate = moment(dueDate);
