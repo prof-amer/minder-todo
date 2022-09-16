@@ -63,7 +63,7 @@
                     <mat-panel-title>
                       {{task.name}}
                     </mat-panel-title>
-                    <button mat-icon-button color="primary" (click)="editTask(notStarted, i)">
+                    <button mat-icon-button color="primary" (click)="onEdit(notStarted, i)">
                       <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button color="warn" (click)="deleteTask(notStarted, i)">
@@ -92,7 +92,7 @@
                     <mat-panel-title>
                       {{task.name}}
                     </mat-panel-title>
-                    <button mat-icon-button color="primary" (click)="editTask(inProgress, i)">
+                    <button mat-icon-button color="primary" (click)="onEdit(inProgress, i)">
                       <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button color="warn" (click)="deleteTask(inProgress, i)">
@@ -121,7 +121,7 @@
                     <mat-panel-title class="completed">
                       {{task.name}}
                     </mat-panel-title>
-                    <button mat-icon-button color="primary" (click)="editTask(completed, i)">
+                    <button mat-icon-button color="primary" (click)="onEdit(completed, i)">
                       <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button color="warn" (click)="deleteTask(completed, i)">

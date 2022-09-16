@@ -70,7 +70,7 @@ export class TasksComponent implements OnInit {
     tasks.splice(index, 1);
   }
 
-  editTask(tasks: Task[], index: number){
+  onEdit(tasks: Task[], index: number){
 
   }
 
