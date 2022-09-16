@@ -3,6 +3,7 @@ import { TasksService } from './tasks.service';
 import { Task } from './Task'
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-tasks',
@@ -66,12 +67,25 @@ export class TasksComponent implements OnInit {
     }
   }
 
-  deleteTask(tasks: Task[],index: number){
+  deleteTask(tasks: Task[], index: number) {
     tasks.splice(index, 1);
   }
 
-  onEdit(tasks: Task[], index: number){
-
+  onEdit(tasks: Task[], index: number) {
+    const {name, description, status, dueDate} = tasks[index]
+    if (dueDate) {
+      const newDate = moment(dueDate);
+      const newTime = newDate.hour() + ':' + (newDate.minute() === 0 ? '00' : newDate.minute())
+      this.form.patchValue({
+        name,
+        description,
+        status,
+        dueDate: {
+          date: newDate,
+          time: newTime
+        }
+      })
+    }
   }
 
   submitTask() {
