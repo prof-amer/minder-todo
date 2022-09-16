@@ -38,11 +38,8 @@
       </mat-form-field>
     </div>
 
-
     <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Add Task</button>
   </form>
-
-
   <div class="col-md-9">
     <div cdkDropListGroup>
       <div class="row">
@@ -50,23 +47,28 @@
           <div class="container">
             <h2>Not Started</h2>
             <div
+              class="list"
               cdkDropList
               [cdkDropListData]="notStarted"
-              class="list"
               (cdkDropListDropped)="drop($event, 'NotStarted')">
-              <div class="box" *ngFor="let task of notStarted; let i = index" cdkDrag>{{task.name}}
-                <div>
-                  <button mat-icon-button (click)="expandTask(notStarted, i)">
-                    <mat-icon>expand_more</mat-icon>
-                  </button>
-                  <button mat-icon-button color="primary" (click)="editTask(notStarted, i)">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-icon-button color="warn" (click)="deleteTask(notStarted, i)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </div>
-              </div>
+              <mat-accordion class="box" *ngFor="let task of notStarted; let i = index" cdkDrag>
+                <mat-expansion-panel class="d-flex flex-column">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{task.name}}
+                    </mat-panel-title>
+                    <button mat-icon-button color="primary" (click)="editTask(notStarted, i)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteTask(notStarted, i)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </mat-expansion-panel-header>
+                    <p>{{task.description}}</p>
+                    <p>{{task.createdAt}}</p>
+                    <p>{{task.dueDate}}</p>
+                </mat-expansion-panel>
+              </mat-accordion>
             </div>
           </div>
         </div>
@@ -74,22 +76,28 @@
           <div class="container">
             <h2>In Progress</h2>
             <div
+              class="list"
               cdkDropList
               [cdkDropListData]="inProgress"
-              class="list"
               (cdkDropListDropped)="drop($event, 'InProgress')">
-              <div class="box" *ngFor="let task of inProgress; let i = index" cdkDrag>{{task.name}}
-                <div>
-                  <button mat-icon-button (click)="expandTask(inProgress, i)">
-                    <mat-icon>expand_more</mat-icon>
-                  </button>
-                  <button mat-icon-button color="primary" (click)="editTask(inProgress, i)">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-icon-button color="warn" (click)="deleteTask(inProgress, i)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </div></div>
+              <mat-accordion class="box" *ngFor="let task of inProgress; let i = index" cdkDrag>
+                <mat-expansion-panel class="d-flex flex-column">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{task.name}}
+                    </mat-panel-title>
+                    <button mat-icon-button color="primary" (click)="editTask(inProgress, i)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteTask(inProgress, i)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </mat-expansion-panel-header>
+                  <p>{{task.description}}</p>
+                  <p>{{task.createdAt}}</p>
+                  <p>{{task.dueDate}}</p>
+                </mat-expansion-panel>
+              </mat-accordion>
             </div>
           </div>
         </div>
@@ -97,22 +105,28 @@
           <div class="container">
             <h2>Completed</h2>
             <div
+              class="list"
               cdkDropList
               [cdkDropListData]="completed"
-              class="list"
               (cdkDropListDropped)="drop($event, 'Completed')">
-              <div class="box completed" *ngFor="let task of completed; let i = index" cdkDrag>{{task.name}}
-                <div>
-                  <button mat-icon-button (click)="expandTask(completed, i)">
-                    <mat-icon>expand_more</mat-icon>
-                  </button>
-                  <button mat-icon-button color="primary" (click)="editTask(completed, i)">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-icon-button color="warn" (click)="deleteTask(completed, i)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </div></div>
+              <mat-accordion class="box completed" *ngFor="let task of completed; let i = index" cdkDrag>
+                <mat-expansion-panel class="d-flex flex-column">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{task.name}}
+                    </mat-panel-title>
+                    <button mat-icon-button color="primary" (click)="editTask(completed, i)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteTask(completed, i)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </mat-expansion-panel-header>
+                  <p>{{task.description}}</p>
+                  <p>{{task.createdAt}}</p>
+                  <p>{{task.dueDate}}</p>
+                </mat-expansion-panel>
+              </mat-accordion>
             </div>
           </div>
         </div>
