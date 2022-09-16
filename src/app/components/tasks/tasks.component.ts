@@ -73,10 +73,6 @@ export class TasksComponent implements OnInit {
 
   }
 
-  expandTask(tasks: Task[], index: number){
-
-  }
-
   submitTask() {
     this.isLoading = true;
     const createdAt = new Date().toISOString();
