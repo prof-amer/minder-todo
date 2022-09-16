@@ -38,7 +38,13 @@
       </mat-form-field>
     </div>
 
-    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Add Task</button>
+    <button *ngIf="editMode; else addMode" mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Edit
+      Task
+    </button>
+    <ng-template #addMode>
+      <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Add Task
+      </button>
+    </ng-template>
   </form>
   <div class="col-md-9">
     <div cdkDropListGroup>
@@ -64,9 +70,9 @@
                       <mat-icon>delete</mat-icon>
                     </button>
                   </mat-expansion-panel-header>
-                    <p>{{task.description}}</p>
-                    <p>{{task.createdAt}}</p>
-                    <p>{{task.dueDate}}</p>
+                  <p>{{task.description}}</p>
+                  <p>{{task.createdAt}}</p>
+                  <p>{{task.dueDate}}</p>
                 </mat-expansion-panel>
               </mat-accordion>
             </div>

@@ -11,6 +11,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 })
 export class TasksComponent implements OnInit {
   form !: FormGroup;
+  editMode: boolean = false;
   isLoading: boolean = false;
   notStarted: Task[] = [];
   inProgress: Task[] = [];
