@@ -103,9 +103,7 @@ export class TasksComponent implements OnInit {
       dueDate.date.minute(mm);
     }
     dueDate = dueDate.date.toISOString();
-    console.log(name, description, status, dueDate, this.updateID)
     if (this.updateID!== undefined && this.updateID !== null){
-      console.log(this.updateGroup[this.updateID])
       this.updateGroup[this.updateID] = {name, description, status, dueDate}
     }
     this.form.reset();
