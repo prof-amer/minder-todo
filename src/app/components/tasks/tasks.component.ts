@@ -17,6 +17,8 @@ export class TasksComponent implements OnInit {
   notStarted: Task[] = [];
   inProgress: Task[] = [];
   completed: Task[] = [];
+  updateID: number | undefined;
+  updateGroup: Task[] = [];
 
 
   constructor(
@@ -73,6 +75,8 @@ export class TasksComponent implements OnInit {
 
   onEdit(tasks: Task[], index: number) {
     this.editMode = true;
+    this.updateID = index;
+    this.updateGroup = tasks;
     const {name, description, status, dueDate} = tasks[index]
     if (dueDate) {
       const newDate = moment(dueDate);
@@ -87,6 +91,24 @@ export class TasksComponent implements OnInit {
         }
       })
     }
+  }
+
+  editTask() {
+    this.isLoading = true;
+    const {name, description, status} = this.form.value;
+    let dueDate = this.form.get('dueDate')?.value;
+    if (dueDate.time) {
+      const [hh, mm] = dueDate.time.split(':');
+      dueDate.date.hour(hh);
+      dueDate.date.minute(mm);
+    }
+    dueDate = dueDate.date.toISOString();
+    console.log(name, description, status, dueDate, this.updateID)
+    if (this.updateID!== undefined && this.updateID !== null){
+      console.log(this.updateGroup[this.updateID])
+      this.updateGroup[this.updateID] = {name, description, status, dueDate}
+    }
+    this.isLoading = false;
   }
 
   submitTask() {

@@ -38,7 +38,7 @@
       </mat-form-field>
     </div>
 
-    <button *ngIf="editMode; else addMode" mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Edit
+    <button *ngIf="editMode; else addMode" mat-flat-button color="primary" type="button" (click)="editTask()" [disabled]="form.invalid">Edit
       Task
     </button>
     <ng-template #addMode>
