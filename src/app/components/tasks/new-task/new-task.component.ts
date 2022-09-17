@@ -20,7 +20,6 @@ export class NewTaskComponent implements OnInit {
     if (this.data.dueDate){
       this.data.dueTime = DateTime.fromISO(this.data.dueDate).toLocaleString(DateTime.TIME_SIMPLE)
     }
-    console.log(DateTime.fromISO(this.data.dueDate).toLocaleString(DateTime.TIME_SIMPLE))
     this.form = this.fb.group({
       name: this.fb.control( this.data.name || null, [Validators.required]),
       description: this.fb.control(this.data.description || null),
