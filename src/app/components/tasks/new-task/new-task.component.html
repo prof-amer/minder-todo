@@ -22,11 +22,19 @@
       </div>
     </mat-radio-group>
 
-    <mat-form-field class="m-2">
-      <input matInput formControlName="dueDate" [ngxMatDatetimePicker]="picker" placeholder="Due date and time">
-      <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #picker [enableMeridian]="true"></ngx-mat-datetime-picker>
-    </mat-form-field>
+    <div class="d-flex flex-row m-2" formGroupName="dueDate">
+      <mat-form-field class="dueDateFormField me-5">
+        <mat-label>Due Date</mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="Pick" required formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="dueDateFormField">
+        <mat-label>Due Time</mat-label>
+        <input matInput type="time" placeholder="Pick" formControlName="time">
+      </mat-form-field>
+    </div>
 
   </div>
 

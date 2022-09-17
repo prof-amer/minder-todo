@@ -18,8 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NewTaskComponent } from './components/tasks/new-task/new-task.component';
-import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
-import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -44,8 +43,7 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
     MatIconModule,
     MatExpansionModule,
     MatDialogModule,
-    NgxMatDatetimePickerModule,
-    NgxMatMomentModule,
+    MatMomentDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

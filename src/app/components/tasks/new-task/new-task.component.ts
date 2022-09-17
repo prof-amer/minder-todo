@@ -20,7 +20,10 @@ export class NewTaskComponent implements OnInit {
       name: this.fb.control( this.data.name || null, [Validators.required]),
       description: this.fb.control(this.data.description || null),
       status: this.fb.control(this.data.status || null, [Validators.required]),
-      dueDate: this.fb.control(this.data.dueDate || null)
+      dueDate: this.fb.group({
+        date: this.fb.control(null),
+        time: this.fb.control(null),
+      })
     });
   }
 
