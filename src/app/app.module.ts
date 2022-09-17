@@ -12,19 +12,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { NewTaskDialogComponent } from './components/tasks/new-task-dialog/new-task-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { NewTaskComponent } from './components/tasks/new-task/new-task.component';
+import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
+import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     TasksComponent,
-    NewTaskDialogComponent
+    NewTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -37,11 +39,13 @@ import { NewTaskDialogComponent } from './components/tasks/new-task-dialog/new-t
     MatInputModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatMomentDateModule,
     MatCheckboxModule,
     MatRadioModule,
     MatIconModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDialogModule,
+    NgxMatDatetimePickerModule,
+    NgxMatMomentModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
