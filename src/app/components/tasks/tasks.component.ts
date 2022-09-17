@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksService } from './tasks.service';
 import { Task } from './Task'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import * as moment from 'moment';
 
@@ -11,7 +10,6 @@ import * as moment from 'moment';
   styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent implements OnInit {
-  form !: FormGroup;
   editMode: boolean = false;
   isLoading: boolean = false;
   notStarted: Task[] = [];
@@ -23,7 +21,7 @@ export class TasksComponent implements OnInit {
 
   constructor(
     private tasksService: TasksService,
-    private fb: FormBuilder
+    public dialog: MatDialog
   ) {
   }
 
@@ -39,20 +37,11 @@ export class TasksComponent implements OnInit {
       }
     )
 
-    this.form = this.fb.group({
-      name: this.fb.control(null, [Validators.required]),
-      description: this.fb.control(null),
-      status: this.fb.control(null, [Validators.required]),
-      dueDate: this.fb.group({
-        date: this.fb.control(null),
-        time: this.fb.control(null),
-      })
+  openDialog(): void {
+    this.dialog.open(NewTaskComponent, {
+      width: '25vw',
+      data: {notStarted: this.notStarted, inProgress: this.inProgress, completed: this.completed}
     });
-  }
-
-  submit() {
-    this.submitTask();
-    this.form.reset()
   }
 
   drop(event: CdkDragDrop<Task[]>, status: string) {
@@ -77,67 +66,20 @@ export class TasksComponent implements OnInit {
     this.editMode = true;
     this.updateID = index;
     this.updateGroup = tasks;
-    const {name, description, status, dueDate} = tasks[index]
-    if (dueDate) {
-      const newDate = moment(dueDate);
-      const newTime = newDate.hour() + ':' + (newDate.minute() === 0 ? '00' : newDate.minute())
-      this.form.patchValue({
+    const {name, description, status, dueDate, createdAt} = tasks[index]
+    this.dialog.open(NewTaskComponent, {
+      width: '25vw',
+      data: {
         name,
         description,
         status,
-        dueDate: {
-          date: newDate,
-          time: newTime
-        }
-      })
-    }
-  }
-
-  editTask() {
-    this.isLoading = true;
-    const {name, description, status} = this.form.value;
-    let dueDate = this.form.get('dueDate')?.value;
-    if (dueDate.time) {
-      const [hh, mm] = dueDate.time.split(':');
-      dueDate.date.hour(hh);
-      dueDate.date.minute(mm);
-    }
-    dueDate = dueDate.date.toISOString();
-    if (this.updateID!== undefined && this.updateID !== null){
-      this.updateGroup[this.updateID] = {name, description, status, dueDate}
-    }
-    this.form.reset();
-    this.editMode = false;
-    this.updateID = undefined;
-    this.updateGroup = [];
-    this.isLoading = false;
-  }
-
-  submitTask() {
-    this.isLoading = true;
-    const createdAt = new Date().toISOString();
-    const {name, description, status} = this.form.value;
-    let dueDate = this.form.get('dueDate')?.value;
-    if (dueDate.time) {
-      const [hh, mm] = dueDate.time.split(':');
-      dueDate.date.hour(hh);
-      dueDate.date.minute(mm);
-    }
-    dueDate = dueDate.date.toISOString();
-    switch (status) {
-      case 'NotStarted':
-        this.notStarted.push({name, description, status, createdAt, dueDate})
-        break
-      case 'InProgress':
-        this.inProgress.push({name, description, status, createdAt, dueDate})
-        break
-      case 'Completed':
-        this.completed.push({name, description, status, createdAt, dueDate})
-        break
-      default:
-      // error handling
-    }
-    this.isLoading = false;
+        dueDate,
+        createdAt,
+        updateID: this.updateID,
+        updateGroup: this.updateGroup,
+        edit: true
+      }
+    });
   }
 
 }
