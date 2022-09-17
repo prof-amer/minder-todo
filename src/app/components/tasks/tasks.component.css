@@ -19,7 +19,7 @@
   min-height: 6.25rem;
   max-height: 20rem;
   background: white;
-  border-radius: 4px;
+  border-radius: 0.5rem;
   overflow: auto;
   display: block;
 }
