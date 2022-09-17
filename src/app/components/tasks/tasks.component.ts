@@ -36,6 +36,7 @@ export class TasksComponent implements OnInit {
         this.isLoading = false;
       }
     )
+  }
 
   openDialog(): void {
     this.dialog.open(NewTaskComponent, {
