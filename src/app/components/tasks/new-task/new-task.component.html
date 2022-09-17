@@ -1,0 +1,42 @@
+<form [formGroup]="form" (ngSubmit)="submit(formDirective)" #formDirective="ngForm">
+  <div class="d-flex flex-column">
+
+    <mat-form-field class="m-2">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" formControlName="name"/>
+    </mat-form-field>
+
+
+    <mat-form-field class="m-2">
+      <mat-label>Description</mat-label>
+      <textarea cdkTextareaAutosize matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+
+    <mat-radio-group formControlName="status" class="m-2">
+      <mat-label>Status</mat-label>
+      <div class="d-flex m-2 justify-content-around">
+        <mat-radio-button class="me-2" value="NotStarted">Not Started</mat-radio-button>
+        <mat-radio-button class="me-2" value="InProgress">In Progress</mat-radio-button>
+        <mat-radio-button value="Completed">Completed</mat-radio-button>
+      </div>
+    </mat-radio-group>
+
+    <mat-form-field class="m-2">
+      <input matInput formControlName="dueDate" [ngxMatDatetimePicker]="picker" placeholder="Due date and time">
+      <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker [enableMeridian]="true"></ngx-mat-datetime-picker>
+    </mat-form-field>
+
+  </div>
+
+  <button *ngIf="this.data.edit; else addMode" mat-flat-button color="primary" type="button"
+          (click)="editTask(formDirective)"
+          [disabled]="form.invalid">
+    Edit Task
+  </button>
+  <ng-template #addMode>
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Add Task
+    </button>
+  </ng-template>
+</form>
