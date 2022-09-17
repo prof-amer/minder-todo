@@ -58,10 +58,9 @@ export class NewTaskComponent implements OnInit {
     let dueDate = this.form.get('dueDate')?.value;
     if (dueDate.time) {
       const [hh, mm] = dueDate.time.split(':');
-      dueDate.date.hour(hh);
-      dueDate.date.minute(mm);
+      dueDate.date =  dueDate.date.set({hour: hh, minute: mm})
     }
-    dueDate = dueDate.date.toISOString();
+    dueDate = dueDate.date.toUTC().toISO()
     switch (status) {
       case 'NotStarted':
         this.data.notStarted.push({name, description, status, createdAt, dueDate})
