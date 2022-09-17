@@ -50,7 +50,13 @@ export class NewTaskComponent implements OnInit {
     this.isLoading = true;
     const createdAt = new Date().toISOString();
     const {name, description, status} = this.form.value;
-    const dueDate = this.form.get('dueDate')?.value.toISOString();
+    let dueDate = this.form.get('dueDate')?.value;
+    if (dueDate.time) {
+      const [hh, mm] = dueDate.time.split(':');
+      dueDate.date.hour(hh);
+      dueDate.date.minute(mm);
+    }
+    dueDate = dueDate.date.toISOString();
     switch (status) {
       case 'NotStarted':
         this.data.notStarted.push({name, description, status, createdAt, dueDate})
