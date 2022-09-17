@@ -16,10 +16,11 @@
 
 .list {
   border: solid 1px #ccc;
-  min-height: 60px;
+  min-height: 6.25rem;
+  max-height: 20rem;
   background: white;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: auto;
   display: block;
 }
 
