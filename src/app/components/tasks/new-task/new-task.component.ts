@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-new-task',
@@ -16,13 +17,17 @@ export class NewTaskComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
+    if (this.data.dueDate){
+      this.data.dueTime = DateTime.fromISO(this.data.dueDate).toLocaleString(DateTime.TIME_SIMPLE)
+    }
+    console.log(DateTime.fromISO(this.data.dueDate).toLocaleString(DateTime.TIME_SIMPLE))
     this.form = this.fb.group({
       name: this.fb.control( this.data.name || null, [Validators.required]),
       description: this.fb.control(this.data.description || null),
       status: this.fb.control(this.data.status || null, [Validators.required]),
       dueDate: this.fb.group({
-        date: this.fb.control(null),
-        time: this.fb.control(null),
+        date: this.fb.control(this.data.dueDate || null),
+        time: this.fb.control( this.data.dueTime || null),
       })
     });
   }

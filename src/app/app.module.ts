@@ -18,7 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NewTaskComponent } from './components/tasks/new-task/new-task.component';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
 
 @NgModule({
   declarations: [
@@ -43,7 +43,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatIconModule,
     MatExpansionModule,
     MatDialogModule,
-    MatMomentDateModule
+    MatLuxonDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
