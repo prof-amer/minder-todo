@@ -17,12 +17,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { NewTaskDialogComponent } from './components/tasks/new-task-dialog/new-task-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    TasksComponent
+    TasksComponent,
+    NewTaskDialogComponent
   ],
   imports: [
     BrowserModule,
