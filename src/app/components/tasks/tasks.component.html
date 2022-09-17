@@ -1,52 +1,52 @@
-<div *ngIf="!isLoading; else loadingTemplate">
+<div *ngIf="!isLoading; else loadingTemplate" class="center content-background">
+  <div class="content-container">
+    <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="showForm">
+      <div>
+        <mat-form-field class="m-2">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" formControlName="name"/>
+        </mat-form-field>
+      </div>
 
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <div>
-      <mat-form-field class="m-2">
-        <mat-label>Name</mat-label>
-        <input matInput type="text" formControlName="name"/>
-      </mat-form-field>
-    </div>
+      <div>
+        <mat-form-field class="m-2">
+          <mat-label>Description</mat-label>
+          <input matInput type="text" formControlName="description"/>
+        </mat-form-field>
+      </div>
 
-    <div>
-      <mat-form-field class="m-2">
-        <mat-label>Description</mat-label>
-        <input matInput type="text" formControlName="description"/>
-      </mat-form-field>
-    </div>
-
-    <div>
-      <mat-radio-group class="d-flex flex-column" formControlName="status">
-        <mat-radio-button value="NotStarted">Not Started</mat-radio-button>
-        <mat-radio-button value="InProgress">In Progress</mat-radio-button>
-        <mat-radio-button value="Completed">Completed</mat-radio-button>
-      </mat-radio-group>
-    </div>
+      <div>
+        <mat-radio-group class="d-flex flex-column" formControlName="status">
+          <mat-radio-button value="NotStarted">Not Started</mat-radio-button>
+          <mat-radio-button value="InProgress">In Progress</mat-radio-button>
+          <mat-radio-button value="Completed">Completed</mat-radio-button>
+        </mat-radio-group>
+      </div>
 
 
-    <div class="d-flex flex-column" formGroupName="dueDate">
-      <mat-form-field>
-        <mat-label>Date</mat-label>
-        <input matInput [matDatepicker]="dp" placeholder="Pick" required formControlName="date">
-        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-        <mat-datepicker #dp></mat-datepicker>
-      </mat-form-field>
+      <div class="d-flex flex-column" formGroupName="dueDate">
+        <mat-form-field>
+          <mat-label>Date</mat-label>
+          <input matInput [matDatepicker]="dp" placeholder="Pick" required formControlName="date">
+          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker #dp></mat-datepicker>
+        </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Time</mat-label>
-        <input matInput type="time" placeholder="Pick" formControlName="time">
-      </mat-form-field>
-    </div>
+        <mat-form-field>
+          <mat-label>Time</mat-label>
+          <input matInput type="time" placeholder="Pick" formControlName="time">
+        </mat-form-field>
+      </div>
 
-    <button *ngIf="editMode; else addMode" mat-flat-button color="primary" type="button" (click)="editTask()" [disabled]="form.invalid">Edit
-      Task
-    </button>
-    <ng-template #addMode>
-      <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Add Task
+      <button *ngIf="editMode; else addMode" mat-flat-button color="primary" type="button" (click)="editTask()"
+              [disabled]="form.invalid">Edit
+        Task
       </button>
-    </ng-template>
-  </form>
-  <div class="col-md-9">
+      <ng-template #addMode>
+        <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Add Task
+        </button>
+      </ng-template>
+    </form>
     <div cdkDropListGroup>
       <div class="row">
         <div class="col-md-4">
