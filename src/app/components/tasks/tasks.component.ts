@@ -45,6 +45,7 @@ export class TasksComponent implements OnInit {
 
   openDialog(): void {
     this.dialog.open(NewTaskComponent, {
+      position: {top: '11rem'},
       width: '25vw',
       data: {notStarted: this.notStarted, inProgress: this.inProgress, completed: this.completed}
     });
