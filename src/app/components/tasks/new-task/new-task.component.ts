@@ -14,35 +14,44 @@ export class NewTaskComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               public dialogRef: MatDialogRef<NewTaskComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
 
   ngOnInit(): void {
-    if (this.data.dueDate){
+    if (this.data.dueDate) {
       this.data.date = DateTime.fromISO(this.data.dueDate)
       this.data.dueTime = DateTime.fromISO(this.data.dueDate).toLocaleString(DateTime.TIME_SIMPLE)
     }
     this.form = this.fb.group({
-      name: this.fb.control( this.data.name || null, [Validators.required]),
+      name: this.fb.control(this.data.name || null, [Validators.required]),
       description: this.fb.control(this.data.description || null),
       status: this.fb.control(this.data.status || null, [Validators.required]),
       dueDate: this.fb.group({
         date: this.fb.control(this.data.date || null),
-        time: this.fb.control( this.data.dueTime || null),
+        time: this.fb.control(this.data.dueTime || null),
       })
     });
   }
 
   submit(formDirective: FormGroupDirective) {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     this.submitTask();
     this.dialogRef.close();
     formDirective.resetForm({})
   }
 
   editTask(formDirective: FormGroupDirective) {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     this.isLoading = true;
     const createdAt = this.data.createdAt
     const [name, description, status, dueDate] = this.parseForm()
-    if (this.data.updateID!== undefined && this.data.updateID !== null){
+    if (this.data.updateID !== undefined && this.data.updateID !== null) {
       this.data.updateGroup[this.data.updateID] = {name, description, status, dueDate, createdAt}
     }
     this.dialogRef.close();
@@ -70,14 +79,14 @@ export class NewTaskComponent implements OnInit {
     this.isLoading = false;
   }
 
-  parseForm(){
+  parseForm() {
     const {name, description, status} = this.form.value;
     let dueDate = this.form.get('dueDate')?.value;
     if (dueDate.date !== null && dueDate.date !== undefined) {
       dueDate.date = DateTime.fromISO(dueDate.date)
       if (dueDate.time !== null && dueDate.time !== undefined) {
         const [hh, mm] = dueDate.time.split(':');
-        dueDate.date =  dueDate.date.set({hour: hh, minute: mm})
+        dueDate.date = dueDate.date.set({hour: hh, minute: mm})
       }
       dueDate = dueDate.date.toUTC().toISO()
       return [name, description, status, dueDate]
