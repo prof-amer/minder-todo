@@ -81,4 +81,13 @@ export class NewTaskComponent implements OnInit {
     return [name, description, status, dueDate]
   }
 
+  setDateRequired() {
+    if (this.form.get('dueDate')?.get('time')?.value) {
+      this.form.get('dueDate')?.get('date')?.setValidators([Validators.required])
+      this.form.get('dueDate')?.get('date')?.updateValueAndValidity()
+    } else {
+      this.form.get('dueDate')?.get('date')?.removeValidators([Validators.required])
+      this.form.get('dueDate')?.get('date')?.updateValueAndValidity()
+    }
+  }
 }
