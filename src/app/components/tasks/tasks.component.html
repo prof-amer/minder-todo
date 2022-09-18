@@ -1,11 +1,10 @@
-<div *ngIf="!isLoading; else loadingTemplate" class="center content-background">
+<div *ngIf="!isLoading; else loadingTemplate" class="center content-background flex-column">
   <div class="content-container">
-    <button mat-raised-button (click)="openDialog()">Add Task</button>
     <div cdkDropListGroup>
       <div class="row">
         <div class="col-md-4">
           <div class="container">
-            <h2>Not Started</h2>
+            <h2>Not Started ({{notStarted.length}})</h2>
             <div
               class="list"
               cdkDropList
@@ -38,7 +37,7 @@
         </div>
         <div class="col-md-4">
           <div class="container">
-            <h2>In Progress</h2>
+            <h2>In Progress ({{inProgress.length}})</h2>
             <div
               class="list"
               cdkDropList
@@ -71,7 +70,7 @@
         </div>
         <div class="col-md-4">
           <div class="container">
-            <h2>Completed</h2>
+            <h2>Completed ({{completed.length}})</h2>
             <div
               class="list"
               cdkDropList
@@ -105,6 +104,9 @@
       </div>
     </div>
   </div>
+  <button class="add-task-button" mat-fab (click)="openDialog()">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
 
 <ng-template #loadingTemplate>
