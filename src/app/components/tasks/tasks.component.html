@@ -1,8 +1,8 @@
 <div *ngIf="!isLoading; else loadingTemplate" class="center content-background flex-column">
   <div class="content-container">
-    <div cdkDropListGroup>
-      <div class="row">
-        <div class="col-md-4">
+    <div cdkDropListGroup class="d-flex flex-row">
+<!--      <div class="row">-->
+        <div class="d-flex col-md-4 justify-content-center">
           <div class="container">
             <h2>Not Started ({{notStarted.length}})</h2>
             <div
@@ -35,7 +35,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="d-flex col-md-4 justify-content-center">
           <div class="container">
             <h2>In Progress ({{inProgress.length}})</h2>
             <div
@@ -68,7 +68,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="d-flex col-md-4 justify-content-center">
           <div class="container">
             <h2>Completed ({{completed.length}})</h2>
             <div
@@ -101,7 +101,7 @@
             </div>
           </div>
         </div>
-      </div>
+<!--      </div>-->
     </div>
   </div>
   <button class="add-task-button" mat-fab (click)="openDialog()">
