@@ -73,12 +73,15 @@ export class NewTaskComponent implements OnInit {
   parseForm(){
     const {name, description, status} = this.form.value;
     let dueDate = this.form.get('dueDate')?.value;
-    if (dueDate.time) {
-      const [hh, mm] = dueDate.time.split(':');
-      dueDate.date =  dueDate.date.set({hour: hh, minute: mm})
+    if (dueDate.date !== null && dueDate.date !== undefined) {
+      if (dueDate.time !== null && dueDate.time !== undefined) {
+        const [hh, mm] = dueDate.time.split(':');
+        dueDate.date =  dueDate.date.set({hour: hh, minute: mm})
+      }
+      dueDate = dueDate.date.toUTC().toISO()
+      return [name, description, status, dueDate]
     }
-    dueDate = dueDate.date.toUTC().toISO()
-    return [name, description, status, dueDate]
+    return [name, description, status, null]
   }
 
   setDateRequired() {
