@@ -25,7 +25,7 @@
     <div class="d-flex flex-row m-2" formGroupName="dueDate">
       <mat-form-field class="dueDateFormField me-5">
         <mat-label>Due Date</mat-label>
-        <input matInput [matDatepicker]="picker" placeholder="Pick" required formControlName="date">
+        <input matInput [matDatepicker]="picker" placeholder="Pick" formControlName="date">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
