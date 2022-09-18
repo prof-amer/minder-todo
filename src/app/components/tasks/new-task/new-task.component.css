@@ -1,3 +1,7 @@
 .dueDateFormField {
   width: 7rem;
 }
+
+.status-error {
+  font-size: 75%;
+}
