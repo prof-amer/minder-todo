@@ -83,4 +83,16 @@ export class TasksComponent implements OnInit {
     });
   }
 
+  previousLocation(event: MouseEvent) {
+    this.startX = event.pageX;
+    this.startY = event.pageY;
+  }
+
+  currentLocation(event: MouseEvent, panel: MatExpansionPanel) {
+    const diffX = Math.abs(event.pageX - this.startX);
+    const diffY = Math.abs(event.pageY - this.startY);
+    if (diffX > this.delta || diffY > this.delta) {
+      panel.toggle()
+    }
+  }
 }

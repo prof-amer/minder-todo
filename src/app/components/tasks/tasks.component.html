@@ -11,8 +11,12 @@
               cdkDropList
               [cdkDropListData]="notStarted"
               (cdkDropListDropped)="drop($event, 'NotStarted')">
-              <mat-accordion class="box" *ngFor="let task of notStarted; let i = index" cdkDrag>
-                <mat-expansion-panel class="d-flex flex-column">
+              <mat-accordion class="box"
+                             *ngFor="let task of notStarted; let i = index"
+                             cdkDrag
+                             (mousedown)="previousLocation($event)"
+                             (mouseup)="currentLocation($event, notStartedPanel)">
+                <mat-expansion-panel class="d-flex flex-column" #notStartedPanel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                       {{task.name}}
@@ -40,8 +44,12 @@
               cdkDropList
               [cdkDropListData]="inProgress"
               (cdkDropListDropped)="drop($event, 'InProgress')">
-              <mat-accordion class="box" *ngFor="let task of inProgress; let i = index" cdkDrag>
-                <mat-expansion-panel class="d-flex flex-column">
+              <mat-accordion class="box"
+                             *ngFor="let task of inProgress; let i = index"
+                             cdkDrag
+                             (mousedown)="previousLocation($event)"
+                             (mouseup)="currentLocation($event, inProgressPanel)">
+                <mat-expansion-panel class="d-flex flex-column" #inProgressPanel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                       {{task.name}}
@@ -69,8 +77,12 @@
               cdkDropList
               [cdkDropListData]="completed"
               (cdkDropListDropped)="drop($event, 'Completed')">
-              <mat-accordion class="box" *ngFor="let task of completed; let i = index" cdkDrag>
-                <mat-expansion-panel class="d-flex flex-column">
+              <mat-accordion class="box"
+                             *ngFor="let task of completed; let i = index"
+                             cdkDrag
+                             (mousedown)="previousLocation($event)"
+                             (mouseup)="currentLocation($event, completedPanel)">
+                <mat-expansion-panel class="d-flex flex-column" #completedPanel>
                   <mat-expansion-panel-header>
                     <mat-panel-title class="completed">
                       {{task.name}}
