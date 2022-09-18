@@ -48,7 +48,7 @@
                              cdkDrag
                              (mousedown)="previousLocation($event)"
                              (mouseup)="currentLocation($event, inProgressPanel)">
-                <mat-expansion-panel class="d-flex flex-column" #inProgressPanel>
+                <mat-expansion-panel class="d-flex flex-column w-100" #inProgressPanel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                       {{task.name}}
@@ -81,7 +81,7 @@
                              cdkDrag
                              (mousedown)="previousLocation($event)"
                              (mouseup)="currentLocation($event, completedPanel)">
-                <mat-expansion-panel class="d-flex flex-column" #completedPanel>
+                <mat-expansion-panel class="d-flex flex-column w-100" #completedPanel>
                   <mat-expansion-panel-header>
                     <mat-panel-title class="completed">
                       {{task.name}}
