@@ -19,6 +19,11 @@ export class TasksComponent implements OnInit {
   updateGroup: Task[] = [];
 
 
+  delta: number = 6;
+  startX: number = 0
+  startY: number = 0
+
+
   constructor(
     private tasksService: TasksService,
     public dialog: MatDialog
