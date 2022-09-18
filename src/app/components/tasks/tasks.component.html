@@ -24,7 +24,7 @@
                       <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button color="warn" (click)="deleteTask(notStarted, i)">
-                      <mat-icon>delete</mat-icon>
+                      <mat-icon class="delete-task-button">delete</mat-icon>
                     </button>
                   </mat-expansion-panel-header>
                   <p>{{task.description}}</p>
@@ -57,7 +57,7 @@
                       <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button color="warn" (click)="deleteTask(inProgress, i)">
-                      <mat-icon>delete</mat-icon>
+                      <mat-icon class="delete-task-button">delete</mat-icon>
                     </button>
                   </mat-expansion-panel-header>
                   <p>{{task.description}}</p>
@@ -90,7 +90,7 @@
                       <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button color="warn" (click)="deleteTask(completed, i)">
-                      <mat-icon>delete</mat-icon>
+                      <mat-icon class="delete-task-button">delete</mat-icon>
                     </button>
                   </mat-expansion-panel-header>
                   <p>{{task.description}}</p>
