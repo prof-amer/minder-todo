@@ -38,9 +38,8 @@
 
   </div>
 
-  <button *ngIf="this.data.edit; else addMode" mat-flat-button color="primary" type="button"
-          (click)="editTask(formDirective)"
-          [disabled]="form.invalid">
+  <button class="m-2" *ngIf="this.data.edit; else addMode" mat-flat-button color="primary" type="button"
+          (click)="editTask(formDirective)">
     Edit Task
   </button>
   <ng-template #addMode>
