@@ -15,7 +15,7 @@
                              cdkDrag
                              (mousedown)="previousLocation($event)"
                              (mouseup)="currentLocation($event, notStartedPanel)">
-                <mat-expansion-panel class="d-flex flex-column" #notStartedPanel>
+                <mat-expansion-panel class="d-flex flex-column w-100" #notStartedPanel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                       {{task.name}}
