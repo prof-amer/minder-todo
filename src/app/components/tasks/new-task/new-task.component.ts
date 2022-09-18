@@ -24,7 +24,7 @@ export class NewTaskComponent implements OnInit {
     this.form = this.fb.group({
       name: this.fb.control( this.data.name || null, [Validators.required]),
       description: this.fb.control(this.data.description || null),
-      status: this.fb.control(this.data.status || null, [Validators.required]),
+      status: this.fb.control(this.data.status || null),
       dueDate: this.fb.group({
         date: this.fb.control(this.data.date || null),
         time: this.fb.control( this.data.dueTime || null),
