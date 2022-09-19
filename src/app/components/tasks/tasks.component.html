@@ -3,17 +3,19 @@
     <div cdkDropListGroup class="d-flex flex-row">
       <div class="d-flex col-md-4 justify-content-center">
         <div class="container">
-          <div class="mb-2">
-            <button color="accent" mat-raised-button [matMenuTriggerFor]="notStartedMenu">
-              {{sortNotStartedButtonText}}<mat-icon>arrow_drop_down</mat-icon>
-            </button>
-            <mat-menu #notStartedMenu="matMenu">
-              <button (click)="onSelectSort(option, notStarted, 'Not Started')" *ngFor="let option of sortOptions" mat-menu-item>
-                {{option}}
+          <div class="d-flex flex-row justify-content-evenly mb-2">
+            <h2>Not Started ({{notStarted.length}})</h2>
+            <div>
+              <button color="accent" mat-raised-button [matMenuTriggerFor]="notStartedMenu">
+                {{sortNotStartedButtonText}}<mat-icon>arrow_drop_down</mat-icon>
               </button>
-            </mat-menu>
+              <mat-menu #notStartedMenu="matMenu">
+                <button (click)="onSelectSort(option, notStarted, 'Not Started')" *ngFor="let option of sortOptions" mat-menu-item>
+                  {{option}}
+                </button>
+              </mat-menu>
+            </div>
           </div>
-          <h2>Not Started ({{notStarted.length}})</h2>
           <div
             class="list"
             cdkDropList
@@ -46,17 +48,19 @@
       </div>
       <div class="d-flex col-md-4 justify-content-center">
         <div class="container">
-          <div class="mb-2">
-            <button color="accent" mat-raised-button [matMenuTriggerFor]="inProgressMenu">
-              {{sortInProgressButtonText}}<mat-icon>arrow_drop_down</mat-icon>
-            </button>
-            <mat-menu #inProgressMenu="matMenu">
-              <button (click)="onSelectSort(option, inProgress, 'In Progress')" *ngFor="let option of sortOptions" mat-menu-item>
-                {{option}}
+          <div class="d-flex flex-row justify-content-evenly mb-2">
+            <h2>In Progress ({{inProgress.length}})</h2>
+            <div>
+              <button color="accent" mat-raised-button [matMenuTriggerFor]="inProgressMenu">
+                {{sortInProgressButtonText}}<mat-icon>arrow_drop_down</mat-icon>
               </button>
-            </mat-menu>
+              <mat-menu #inProgressMenu="matMenu">
+                <button (click)="onSelectSort(option, inProgress, 'In Progress')" *ngFor="let option of sortOptions" mat-menu-item>
+                  {{option}}
+                </button>
+              </mat-menu>
+            </div>
           </div>
-          <h2>In Progress ({{inProgress.length}})</h2>
           <div
             class="list"
             cdkDropList
@@ -89,17 +93,19 @@
       </div>
       <div class="d-flex col-md-4 justify-content-center">
         <div class="container">
-          <div class="mb-2">
-            <button color="accent" mat-raised-button [matMenuTriggerFor]="completedMenu">
-              {{sortCompletedButtonText}}<mat-icon>arrow_drop_down</mat-icon>
-            </button>
-            <mat-menu #completedMenu="matMenu">
-              <button (click)="onSelectSort(option, completed, 'Completed')" *ngFor="let option of sortOptions" mat-menu-item>
-                {{option}}
+          <div class="d-flex flex-row justify-content-evenly mb-2">
+            <h2>Completed ({{completed.length}})</h2>
+            <div>
+              <button color="accent" mat-raised-button [matMenuTriggerFor]="completedMenu">
+                {{sortCompletedButtonText}}<mat-icon>arrow_drop_down</mat-icon>
               </button>
-            </mat-menu>
+              <mat-menu #completedMenu="matMenu">
+                <button (click)="onSelectSort(option, completed, 'Completed')" *ngFor="let option of sortOptions" mat-menu-item>
+                  {{option}}
+                </button>
+              </mat-menu>
+            </div>
           </div>
-          <h2>Completed ({{completed.length}})</h2>
           <div
             class="list"
             cdkDropList
