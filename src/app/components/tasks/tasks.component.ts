@@ -42,17 +42,17 @@ export class TasksComponent implements OnInit {
     this.tasksService.getTasks().subscribe(
       (response: Task[]) => {
         if (localStorage.getItem('notStarted')) {
-          this.notStarted = JSON.parse(localStorage.getItem('notStarted') || "")
+          this.notStarted = JSON.parse(localStorage.getItem('notStarted') || '')
         } else {
           this.notStarted = response.filter(task => task.status === 'NotStarted');
         }
         if (localStorage.getItem('inProgress')) {
-          this.inProgress = JSON.parse(localStorage.getItem('inProgress') || "")
+          this.inProgress = JSON.parse(localStorage.getItem('inProgress') || '')
         } else {
           this.inProgress  = response.filter(task => task.status === 'InProgress');
         }
         if (localStorage.getItem('completed')) {
-          this.completed = JSON.parse(localStorage.getItem('completed') || "")
+          this.completed = JSON.parse(localStorage.getItem('completed') || '')
         } else {
           this.completed = response.filter(task => task.status === 'Completed');
         }
