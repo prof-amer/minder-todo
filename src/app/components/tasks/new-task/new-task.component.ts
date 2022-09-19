@@ -117,14 +117,15 @@ export class NewTaskComponent implements OnInit {
     return [name, description, status, null]
   }
 
+  // set date as required when time is set
   setDateRequired() {
-    if (this.form.get('dueDate')?.get('time')?.value) {
-      this.form.get('dueDate')?.get('date')?.setValidators([Validators.required])
-      this.form.get('dueDate')?.get('date')?.updateValueAndValidity()
-      this.form.get('dueDate')?.get('date')?.markAsTouched()
+    if (this.form.get('dueDate.time')?.value) {
+      this.form.get('dueDate.date')?.setValidators([Validators.required])
+      this.form.get('dueDate.date')?.updateValueAndValidity()
+      this.form.get('dueDate.date')?.markAsTouched()
     } else {
-      this.form.get('dueDate')?.get('date')?.removeValidators([Validators.required])
-      this.form.get('dueDate')?.get('date')?.updateValueAndValidity()
+      this.form.get('dueDate.date')?.removeValidators([Validators.required])
+      this.form.get('dueDate.date')?.updateValueAndValidity()
     }
   }
 }
