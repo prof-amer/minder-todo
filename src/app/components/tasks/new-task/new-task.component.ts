@@ -31,7 +31,7 @@ export class NewTaskComponent implements OnInit {
         time: this.fb.control(this.data.dueTime || null),
       })
     });
-    if (this.data.dueTime !== null && this.data.dueTime !== undefined){
+    if (this.data.dueTime){
       this.form.get('dueDate.date')?.setValidators([Validators.required]);
     }
   }
@@ -54,7 +54,7 @@ export class NewTaskComponent implements OnInit {
     this.isLoading = true;
     const createdAt = this.data.createdAt
     const [name, description, status, dueDate] = this.parseForm()
-    if (this.data.updateID !== undefined && this.data.updateID !== null) {
+    if (this.data.updateID) {
       this.data.updateGroup[this.data.updateID] = {name, description, status, dueDate, createdAt}
     }
     this.dialogRef.close();
