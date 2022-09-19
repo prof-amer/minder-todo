@@ -19,7 +19,7 @@ export class NewTaskComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.dueDate) {
-      this.data.date = DateTime.fromISO(this.data.dueDate)
+      this.data.date = DateTime.fromISO(this.data.dueDate).toISODate()
       this.data.dueTime = DateTime.fromISO(this.data.dueDate).toLocaleString(DateTime.TIME_SIMPLE)
     }
     this.form = this.fb.group({
