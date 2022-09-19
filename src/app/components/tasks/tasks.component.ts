@@ -84,6 +84,18 @@ export class TasksComponent implements OnInit {
       event.container.data[event.currentIndex].status = status;
       this.saveToDatabase();
     }
+    // notify user that tasks are no longer correctly sorted
+    switch (status) {
+      case 'NotStarted':
+        this.sortNotStartedButtonText = 'Sort By'
+        break
+      case 'InProgress':
+        this.sortInProgressButtonText = 'Sort By'
+        break
+      case 'Completed':
+        this.sortCompletedButtonText = 'Sort By'
+        break
+    }
   }
 
   deleteTask(tasks: Task[], index: number) {
