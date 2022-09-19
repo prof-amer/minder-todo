@@ -107,8 +107,4 @@ export class NewTaskComponent implements OnInit {
       this.form.get('dueDate')?.get('date')?.updateValueAndValidity()
     }
   }
-
-  preventTyping() {
-    return false;
-  }
 }

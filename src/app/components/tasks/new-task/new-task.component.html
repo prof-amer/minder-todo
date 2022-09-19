@@ -21,14 +21,14 @@
         <mat-radio-button class="me-2" value="InProgress">In Progress</mat-radio-button>
         <mat-radio-button value="Completed">Completed</mat-radio-button>
       </div>
-      <mat-error class="status-error" *ngIf="form.get('status')?.touched && form.get('status')?.invalid">Status is required</mat-error>
+      <mat-error class="error-message" *ngIf="form.get('status')?.touched && form.get('status')?.invalid">Status is required</mat-error>
     </mat-radio-group>
 
-    <div class="d-flex flex-row m-2" formGroupName="dueDate">
+    <div class="d-flex flex-row m-2 mb-4" formGroupName="dueDate">
       <mat-form-field class="dueDateFormField me-5">
         <mat-label>Due Date</mat-label>
-        <input matInput placeholder="Pick" formControlName="date" type="date" (keydown)="preventTyping()">
-        <mat-error *ngIf="form.get('dueDate.date')?.invalid">Date is required</mat-error>
+        <input matInput placeholder="Pick" formControlName="date" type="date">
+        <mat-error *ngIf="form.get('dueDate.date')?.invalid">Date is required and must be a valid date</mat-error>
       </mat-form-field>
 
       <mat-form-field class="dueDateFormField">
@@ -37,14 +37,14 @@
       </mat-form-field>
     </div>
 
-  </div>
-
-  <button class="m-2" *ngIf="this.data.edit; else addMode" mat-flat-button color="primary" type="button"
-          (click)="editTask(formDirective)">
-    Edit Task
-  </button>
-  <ng-template #addMode>
-    <button class="m-2" mat-flat-button color="primary" type="submit">Add Task
+    <button class="m-2" *ngIf="this.data.edit; else addMode" mat-flat-button color="primary" type="button"
+            (click)="editTask(formDirective)">
+      Edit Task
     </button>
-  </ng-template>
+    <ng-template #addMode>
+      <button class="m-2" mat-flat-button color="primary" type="submit">Add Task
+      </button>
+    </ng-template>
+
+  </div>
 </form>
