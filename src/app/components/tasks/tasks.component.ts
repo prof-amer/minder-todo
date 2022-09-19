@@ -75,6 +75,9 @@ export class TasksComponent implements OnInit {
   drop(event: CdkDragDrop<Task[]>, status: string) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      localStorage.setItem('notStarted', JSON.stringify(this.notStarted));
+      localStorage.setItem('inProgress', JSON.stringify(this.inProgress));
+      localStorage.setItem('completed', JSON.stringify(this.completed));
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -83,11 +86,17 @@ export class TasksComponent implements OnInit {
         event.currentIndex,
       );
       event.container.data[event.currentIndex].status = status;
+      localStorage.setItem('notStarted', JSON.stringify(this.notStarted));
+      localStorage.setItem('inProgress', JSON.stringify(this.inProgress));
+      localStorage.setItem('completed', JSON.stringify(this.completed));
     }
   }
 
   deleteTask(tasks: Task[], index: number) {
     tasks.splice(index, 1);
+    localStorage.setItem('notStarted', JSON.stringify(this.notStarted));
+    localStorage.setItem('inProgress', JSON.stringify(this.inProgress));
+    localStorage.setItem('completed', JSON.stringify(this.completed));
   }
 
   onEdit(tasks: Task[], index: number) {
