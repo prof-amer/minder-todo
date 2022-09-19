@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TasksService } from './tasks.service';
 import { Task } from './Task'
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -6,13 +6,16 @@ import { NewTaskComponent } from './new-task/new-task.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { DateTime } from 'luxon';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent implements OnInit, OnDestroy {
+  private subs: Subscription[] = [];
+
   editMode: boolean = false;
   isLoading: boolean = false;
   notStarted: Task[] = [];
@@ -37,9 +40,13 @@ export class TasksComponent implements OnInit {
   ) {
   }
 
+  ngOnDestroy(): void {
+    this.subs.forEach(sub => sub.unsubscribe());
+    }
+
   ngOnInit(): void {
     this.isLoading = true;
-    this.tasksService.getTasks().subscribe(
+    const sub1 = this.tasksService.getTasks().subscribe(
       (response: Task[]) => {
         if (localStorage.getItem('notStarted')) {
           this.notStarted = JSON.parse(localStorage.getItem('notStarted') || '')
@@ -60,6 +67,7 @@ export class TasksComponent implements OnInit {
         this.isLoading = false;
       }
     )
+    this.subs.push(sub1);
   }
 
   openDialog(): void {
