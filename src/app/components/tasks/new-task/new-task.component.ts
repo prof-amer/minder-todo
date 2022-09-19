@@ -59,13 +59,16 @@ export class NewTaskComponent implements OnInit {
     }
     switch (status) {
       case 'NotStarted':
-        this.data.notStarted.unshift(this.data.updateGroup[this.data.updateID])
+        this.data.notStarted.unshift(this.data.updateGroup[this.data.updateID]);
+        localStorage.setItem('notStarted', JSON.stringify(this.data.notStarted));
         break
       case 'InProgress':
-        this.data.inProgress.unshift(this.data.updateGroup[this.data.updateID])
+        this.data.inProgress.unshift(this.data.updateGroup[this.data.updateID]);
+        localStorage.setItem('inProgress', JSON.stringify(this.data.inProgress));
         break
       case 'Completed':
-        this.data.completed.unshift(this.data.updateGroup[this.data.updateID])
+        this.data.completed.unshift(this.data.updateGroup[this.data.updateID]);
+        localStorage.setItem('completed', JSON.stringify(this.data.completed));
         break
       default:
       // error handling
@@ -83,12 +86,15 @@ export class NewTaskComponent implements OnInit {
     switch (status) {
       case 'NotStarted':
         this.data.notStarted.push({name, description, status, createdAt, dueDate})
+        localStorage.setItem('notStarted', JSON.stringify(this.data.notStarted));
         break
       case 'InProgress':
         this.data.inProgress.push({name, description, status, createdAt, dueDate})
+        localStorage.setItem('inProgress', JSON.stringify(this.data.inProgress));
         break
       case 'Completed':
         this.data.completed.push({name, description, status, createdAt, dueDate})
+        localStorage.setItem('completed', JSON.stringify(this.data.completed));
         break
       default:
       // error handling
