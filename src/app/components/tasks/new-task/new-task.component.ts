@@ -54,7 +54,7 @@ export class NewTaskComponent implements OnInit {
     this.isLoading = true;
     const createdAt = this.data.createdAt
     const [name, description, status, dueDate] = this.parseForm()
-    if (this.data.updateID) {
+    if (this.data.updateID !== null && this.data.updateID !== undefined) {
       this.data.updateGroup[this.data.updateID] = {name, description, status, dueDate, createdAt}
     }
     switch (status) {
