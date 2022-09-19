@@ -1,105 +1,135 @@
 <div *ngIf="!isLoading; else loadingTemplate" class="center content-background flex-column">
   <div class="content-container">
     <div cdkDropListGroup class="d-flex flex-row">
-        <div class="d-flex col-md-4 justify-content-center">
-          <div class="container">
-            <h2>Not Started ({{notStarted.length}})</h2>
-            <div
-              class="list"
-              cdkDropList
-              [cdkDropListData]="notStarted"
-              (cdkDropListDropped)="drop($event, 'NotStarted')">
-              <mat-accordion class="box"
-                             *ngFor="let task of notStarted; let i = index"
-                             cdkDrag
-                             (mousedown)="previousLocation($event)"
-                             (mouseup)="currentLocation($event, notStartedPanel)">
-                <mat-expansion-panel class="d-flex flex-column w-100" #notStartedPanel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      {{task.name}}
-                    </mat-panel-title>
-                    <button mat-icon-button color="primary" (click)="onEdit(notStarted, i)">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button color="warn" (click)="deleteTask(notStarted, i)">
-                      <mat-icon class="delete-task-button">delete</mat-icon>
-                    </button>
-                  </mat-expansion-panel-header>
-                  <p *ngIf="task.description !== null">Description: {{task.description}}</p>
-                  <p *ngIf="task.createdAt !== null">Created at: {{task.createdAt | date:'MMM d, y, h:mm a'}}</p>
-                  <p *ngIf="task.dueDate !== null">Due date: {{task.dueDate | date:'MMM d, y, h:mm a' }}</p>
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
+      <div class="d-flex col-md-4 justify-content-center">
+        <div class="container">
+          <div class="mb-2">
+            <button color="accent" mat-raised-button [matMenuTriggerFor]="notStartedMenu">
+              {{sortNotStartedButtonText}}<mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #notStartedMenu="matMenu">
+              <button (click)="onSelectSort(option, notStarted, 'Not Started')" *ngFor="let option of sortOptions" mat-menu-item>
+                {{option}}
+              </button>
+            </mat-menu>
+          </div>
+          <h2>Not Started ({{notStarted.length}})</h2>
+          <div
+            class="list"
+            cdkDropList
+            [cdkDropListData]="notStarted"
+            (cdkDropListDropped)="drop($event, 'NotStarted')">
+            <mat-accordion class="box"
+                           *ngFor="let task of notStarted; let i = index"
+                           cdkDrag
+                           (mousedown)="previousLocation($event)"
+                           (mouseup)="currentLocation($event, notStartedPanel)">
+              <mat-expansion-panel class="d-flex flex-column w-100" #notStartedPanel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{task.name}}
+                  </mat-panel-title>
+                  <button mat-icon-button color="primary" (click)="onEdit(notStarted, i)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="deleteTask(notStarted, i)">
+                    <mat-icon class="delete-task-button">delete</mat-icon>
+                  </button>
+                </mat-expansion-panel-header>
+                <p *ngIf="task.description !== null">Description: {{task.description}}</p>
+                <p *ngIf="task.createdAt !== null">Created at: {{task.createdAt | date:'MMM d, y, h:mm a'}}</p>
+                <p *ngIf="task.dueDate !== null">Due date: {{task.dueDate | date:'MMM d, y, h:mm a' }}</p>
+              </mat-expansion-panel>
+            </mat-accordion>
           </div>
         </div>
-        <div class="d-flex col-md-4 justify-content-center">
-          <div class="container">
-            <h2>In Progress ({{inProgress.length}})</h2>
-            <div
-              class="list"
-              cdkDropList
-              [cdkDropListData]="inProgress"
-              (cdkDropListDropped)="drop($event, 'InProgress')">
-              <mat-accordion class="box"
-                             *ngFor="let task of inProgress; let i = index"
-                             cdkDrag
-                             (mousedown)="previousLocation($event)"
-                             (mouseup)="currentLocation($event, inProgressPanel)">
-                <mat-expansion-panel class="d-flex flex-column w-100" #inProgressPanel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      {{task.name}}
-                    </mat-panel-title>
-                    <button mat-icon-button color="primary" (click)="onEdit(inProgress, i)">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button color="warn" (click)="deleteTask(inProgress, i)">
-                      <mat-icon class="delete-task-button">delete</mat-icon>
-                    </button>
-                  </mat-expansion-panel-header>
-                  <p *ngIf="task.description !== null">Description: {{task.description}}</p>
-                  <p *ngIf="task.createdAt !== null">Created at: {{task.createdAt | date:'MMM d, y, h:mm a'}}</p>
-                  <p *ngIf="task.dueDate !== null">Due date: {{task.dueDate | date:'MMM d, y, h:mm a' }}</p>
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
+      </div>
+      <div class="d-flex col-md-4 justify-content-center">
+        <div class="container">
+          <div class="mb-2">
+            <button color="accent" mat-raised-button [matMenuTriggerFor]="inProgressMenu">
+              {{sortInProgressButtonText}}<mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #inProgressMenu="matMenu">
+              <button (click)="onSelectSort(option, inProgress, 'In Progress')" *ngFor="let option of sortOptions" mat-menu-item>
+                {{option}}
+              </button>
+            </mat-menu>
+          </div>
+          <h2>In Progress ({{inProgress.length}})</h2>
+          <div
+            class="list"
+            cdkDropList
+            [cdkDropListData]="inProgress"
+            (cdkDropListDropped)="drop($event, 'InProgress')">
+            <mat-accordion class="box"
+                           *ngFor="let task of inProgress; let i = index"
+                           cdkDrag
+                           (mousedown)="previousLocation($event)"
+                           (mouseup)="currentLocation($event, inProgressPanel)">
+              <mat-expansion-panel class="d-flex flex-column w-100" #inProgressPanel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{task.name}}
+                  </mat-panel-title>
+                  <button mat-icon-button color="primary" (click)="onEdit(inProgress, i)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="deleteTask(inProgress, i)">
+                    <mat-icon class="delete-task-button">delete</mat-icon>
+                  </button>
+                </mat-expansion-panel-header>
+                <p *ngIf="task.description !== null">Description: {{task.description}}</p>
+                <p *ngIf="task.createdAt !== null">Created at: {{task.createdAt | date:'MMM d, y, h:mm a'}}</p>
+                <p *ngIf="task.dueDate !== null">Due date: {{task.dueDate | date:'MMM d, y, h:mm a' }}</p>
+              </mat-expansion-panel>
+            </mat-accordion>
           </div>
         </div>
-        <div class="d-flex col-md-4 justify-content-center">
-          <div class="container">
-            <h2>Completed ({{completed.length}})</h2>
-            <div
-              class="list"
-              cdkDropList
-              [cdkDropListData]="completed"
-              (cdkDropListDropped)="drop($event, 'Completed')">
-              <mat-accordion class="box"
-                             *ngFor="let task of completed; let i = index"
-                             cdkDrag
-                             (mousedown)="previousLocation($event)"
-                             (mouseup)="currentLocation($event, completedPanel)">
-                <mat-expansion-panel class="d-flex flex-column w-100" #completedPanel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title class="completed">
-                      {{task.name}}
-                    </mat-panel-title>
-                    <button mat-icon-button color="primary" (click)="onEdit(completed, i)">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button color="warn" (click)="deleteTask(completed, i)">
-                      <mat-icon class="delete-task-button">delete</mat-icon>
-                    </button>
-                  </mat-expansion-panel-header>
-                  <p *ngIf="task.description !== null">Description: {{task.description}}</p>
-                  <p *ngIf="task.createdAt !== null">Created at: {{task.createdAt | date:'MMM d, y, h:mm a'}}</p>
-                  <p *ngIf="task.dueDate !== null">Due date: {{task.dueDate | date:'MMM d, y, h:mm a' }}</p>
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
+      </div>
+      <div class="d-flex col-md-4 justify-content-center">
+        <div class="container">
+          <div class="mb-2">
+            <button color="accent" mat-raised-button [matMenuTriggerFor]="completedMenu">
+              {{sortCompletedButtonText}}<mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #completedMenu="matMenu">
+              <button (click)="onSelectSort(option, completed, 'Completed')" *ngFor="let option of sortOptions" mat-menu-item>
+                {{option}}
+              </button>
+            </mat-menu>
+          </div>
+          <h2>Completed ({{completed.length}})</h2>
+          <div
+            class="list"
+            cdkDropList
+            [cdkDropListData]="completed"
+            (cdkDropListDropped)="drop($event, 'Completed')">
+            <mat-accordion class="box"
+                           *ngFor="let task of completed; let i = index"
+                           cdkDrag
+                           (mousedown)="previousLocation($event)"
+                           (mouseup)="currentLocation($event, completedPanel)">
+              <mat-expansion-panel class="d-flex flex-column w-100" #completedPanel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title class="completed">
+                    {{task.name}}
+                  </mat-panel-title>
+                  <button mat-icon-button color="primary" (click)="onEdit(completed, i)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="deleteTask(completed, i)">
+                    <mat-icon class="delete-task-button">delete</mat-icon>
+                  </button>
+                </mat-expansion-panel-header>
+                <p *ngIf="task.description !== null">Description: {{task.description}}</p>
+                <p *ngIf="task.createdAt !== null">Created at: {{task.createdAt | date:'MMM d, y, h:mm a'}}</p>
+                <p *ngIf="task.dueDate !== null">Due date: {{task.dueDate | date:'MMM d, y, h:mm a' }}</p>
+              </mat-expansion-panel>
+            </mat-accordion>
           </div>
         </div>
+      </div>
     </div>
   </div>
   <button class="add-task-button" mat-fab (click)="openDialog()">
