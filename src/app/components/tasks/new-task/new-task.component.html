@@ -27,7 +27,7 @@
     <div class="d-flex flex-row m-2" formGroupName="dueDate">
       <mat-form-field class="dueDateFormField me-5">
         <mat-label>Due Date</mat-label>
-        <input matInput placeholder="Pick" formControlName="date" type="date">
+        <input matInput placeholder="Pick" formControlName="date" type="date" (keydown)="preventTyping()">
         <mat-error *ngIf="form.get('dueDate.date')?.invalid">Date is required</mat-error>
       </mat-form-field>
 
