@@ -19,6 +19,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NewTaskComponent } from './components/tasks/new-task/new-task.component';
 import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -27,24 +28,25 @@ import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
     TasksComponent,
     NewTaskComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    DragDropModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatIconModule,
-    MatExpansionModule,
-    MatDialogModule,
-    MatLuxonDateModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule,
+        DragDropModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatIconModule,
+        MatExpansionModule,
+        MatDialogModule,
+        MatLuxonDateModule,
+        MatMenuModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

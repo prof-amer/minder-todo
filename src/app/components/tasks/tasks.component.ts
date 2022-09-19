@@ -22,6 +22,10 @@ export class TasksComponent implements OnInit {
   delta: number = 6;
   startX: number = 0
   startY: number = 0
+  sortOptions = ['Due Date: Nearest', 'Due Date: Furthest', 'Created at: Newest', 'Created at: Oldest']
+  sortNotStartedButtonText: string = 'Sort By';
+  sortInProgressButtonText: string = 'Sort By';
+  sortCompletedButtonText: string = 'Sort By';
 
 
   constructor(
@@ -102,6 +106,84 @@ export class TasksComponent implements OnInit {
     const diffY = Math.abs(event.pageY - this.startY);
     if (diffX > this.delta || diffY > this.delta) {
       panel.toggle()
+    }
+  }
+
+  sortTasks(tasks: Task[], sortFilter: string, direction: string) {
+    if (sortFilter === 'Due Date') {
+      tasks.map((obj) => {
+        return {...obj, date: DateTime.fromISO(<string>obj.dueDate)};
+      });
+    } else {
+      tasks.map((obj) => {
+        return {...obj, date: DateTime.fromISO(<string>obj.createdAt)};
+      });
+    }
+    switch (sortFilter) {
+      case 'Due Date':
+        switch (direction) {
+          case 'asc':
+            tasks.sort(function (a, b) {
+              // @ts-ignore
+              return (a.dueDate < b.dueDate) ? -1 : ((a.dueDate > b.dueDate) ? 1 : 0);
+            });
+            break
+          case 'desc':
+            tasks.sort(function (a, b) {
+              // @ts-ignore
+              return (a.dueDate > b.dueDate) ? -1 : ((a.dueDate < b.dueDate) ? 1 : 0);
+            });
+            break
+          default:
+          // error handling
+        }
+        break;
+      case 'Created at':
+        switch (direction) {
+          case 'asc':
+            tasks.sort(function (a, b) {
+              // @ts-ignore
+              return (a.createdAt < b.createdAt) ? -1 : ((a.createdAt > b.createdAt) ? 1 : 0);
+            });
+            break
+          case 'desc':
+            tasks.sort(function (a, b) {
+              // @ts-ignore
+              return (a.createdAt > b.createdAt) ? -1 : ((a.createdAt < b.createdAt) ? 1 : 0);
+            });
+            break
+          default:
+            // error handling
+            break;
+        }
+    }
+  }
+
+  onSelectSort(option: string, tasks: Task[], container: string) {
+    switch (container) {
+      case 'Not Started':
+        this.sortNotStartedButtonText = option
+        break
+      case 'In Progress':
+        this.sortInProgressButtonText = option
+        break
+      case 'Completed':
+        this.sortCompletedButtonText = option
+        break
+    }
+    switch (option) {
+      case 'Due Date: Nearest':
+        this.sortTasks(tasks, 'Due Date', 'asc')
+        break;
+      case 'Due Date: Furthest':
+        this.sortTasks(tasks, 'Due Date', 'desc')
+        break;
+      case 'Created at: Newest':
+        this.sortTasks(tasks, 'Created at', 'desc')
+        break;
+      case 'Created at: Oldest':
+        this.sortTasks(tasks, 'Created at', 'asc')
+        break;
     }
   }
 }
