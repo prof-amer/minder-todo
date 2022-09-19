@@ -31,7 +31,7 @@ export class NewTaskComponent implements OnInit {
         time: this.fb.control(this.data.dueTime || null),
       })
     });
-    if (this.data.dueTime){
+    if (this.data.dueTime) {
       this.form.get('dueDate.date')?.setValidators([Validators.required]);
     }
   }
@@ -54,26 +54,29 @@ export class NewTaskComponent implements OnInit {
     this.isLoading = true;
     const createdAt = this.data.createdAt
     const [name, description, status, dueDate] = this.parseForm()
+    const previousStatus = this.data.updateGroup[this.data.updateID].status
     if (this.data.updateID !== null && this.data.updateID !== undefined) {
       this.data.updateGroup[this.data.updateID] = {name, description, status, dueDate, createdAt}
     }
-    switch (status) {
-      case 'NotStarted':
-        this.data.notStarted.unshift(this.data.updateGroup[this.data.updateID]);
-        localStorage.setItem('notStarted', JSON.stringify(this.data.notStarted));
-        break
-      case 'InProgress':
-        this.data.inProgress.unshift(this.data.updateGroup[this.data.updateID]);
-        localStorage.setItem('inProgress', JSON.stringify(this.data.inProgress));
-        break
-      case 'Completed':
-        this.data.completed.unshift(this.data.updateGroup[this.data.updateID]);
-        localStorage.setItem('completed', JSON.stringify(this.data.completed));
-        break
-      default:
-      // error handling
+    if (status !== previousStatus) {
+      switch (status) {
+        case 'NotStarted':
+          this.data.notStarted.unshift(this.data.updateGroup[this.data.updateID]);
+          break
+        case 'InProgress':
+          this.data.inProgress.unshift(this.data.updateGroup[this.data.updateID]);
+          break
+        case 'Completed':
+          this.data.completed.unshift(this.data.updateGroup[this.data.updateID]);
+          break
+        default:
+        // error handling
+      }
+      this.data.updateGroup.splice(this.data.updateID, 1)
     }
-    this.data.updateGroup.splice(this.data.updateID, 1)
+    localStorage.setItem('notStarted', JSON.stringify(this.data.notStarted));
+    localStorage.setItem('inProgress', JSON.stringify(this.data.inProgress));
+    localStorage.setItem('completed', JSON.stringify(this.data.completed));
     this.dialogRef.close();
     formDirective.resetForm({})
     this.isLoading = false;
