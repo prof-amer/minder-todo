@@ -183,7 +183,6 @@ export class TasksComponent implements OnInit, OnDestroy {
             break
           case 'desc':
             tasks.sort(function (a, b) {
-              // @ts-ignore
               return ((a.createdAt || '') > (b.createdAt || '')) ? -1 : (((a.createdAt || '') < (b.createdAt || '')) ? 1 : 0);
             });
             break
