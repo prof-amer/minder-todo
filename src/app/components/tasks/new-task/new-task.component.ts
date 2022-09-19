@@ -57,6 +57,20 @@ export class NewTaskComponent implements OnInit {
     if (this.data.updateID) {
       this.data.updateGroup[this.data.updateID] = {name, description, status, dueDate, createdAt}
     }
+    switch (status) {
+      case 'NotStarted':
+        this.data.notStarted.unshift(this.data.updateGroup[this.data.updateID])
+        break
+      case 'InProgress':
+        this.data.inProgress.unshift(this.data.updateGroup[this.data.updateID])
+        break
+      case 'Completed':
+        this.data.completed.unshift(this.data.updateGroup[this.data.updateID])
+        break
+      default:
+      // error handling
+    }
+    this.data.updateGroup.splice(this.data.updateID, 1)
     this.dialogRef.close();
     formDirective.resetForm({})
     this.isLoading = false;

@@ -82,6 +82,9 @@ export class TasksComponent implements OnInit {
         status,
         dueDate,
         createdAt,
+        notStarted: this.notStarted,
+        inProgress: this.inProgress,
+        completed: this.completed,
         updateID: this.updateID,
         updateGroup: this.updateGroup,
         edit: true
