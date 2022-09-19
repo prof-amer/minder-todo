@@ -27,10 +27,13 @@ export class NewTaskComponent implements OnInit {
       description: this.fb.control(this.data.description || null),
       status: this.fb.control(this.data.status || null, [Validators.required]),
       dueDate: this.fb.group({
-        date: this.fb.control(this.data.date || null, this.data.dueTime !== null ? [Validators.required] : []),
+        date: this.fb.control(this.data.date || null),
         time: this.fb.control(this.data.dueTime || null),
       })
     });
+    if (this.data.dueTime !== null && this.data.dueTime !== undefined){
+      this.form.get('dueDate.date')?.setValidators([Validators.required]);
+    }
   }
 
   submit(formDirective: FormGroupDirective) {
