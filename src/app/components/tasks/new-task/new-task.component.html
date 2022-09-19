@@ -28,7 +28,7 @@
       <mat-form-field class="dueDateFormField me-5">
         <mat-label>Due Date</mat-label>
         <input matInput placeholder="Pick" formControlName="date" type="date">
-        <mat-error *ngIf="form.get('dueDate')?.get('date')?.invalid">Date is required</mat-error>
+        <mat-error *ngIf="form.get('dueDate.date')?.invalid">Date is required</mat-error>
       </mat-form-field>
 
       <mat-form-field class="dueDateFormField">
