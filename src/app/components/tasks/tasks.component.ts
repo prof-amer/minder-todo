@@ -162,14 +162,12 @@ export class TasksComponent implements OnInit, OnDestroy {
         switch (direction) {
           case 'asc':
             tasks.sort(function (a, b) {
-              // @ts-ignore
-              return (a.dueDate < b.dueDate) ? -1 : ((a.dueDate > b.dueDate) ? 1 : 0);
+              return ((a.dueDate || '') < (b.dueDate || '')) ? -1 : (((a.dueDate || '') > (b.dueDate || '')) ? 1 : 0);
             });
             break
           case 'desc':
             tasks.sort(function (a, b) {
-              // @ts-ignore
-              return (a.dueDate > b.dueDate) ? -1 : ((a.dueDate < b.dueDate) ? 1 : 0);
+              return ((a.dueDate || '') > (b.dueDate || '')) ? -1 : (((a.dueDate || '') < (b.dueDate || '')) ? 1 : 0);
             });
             break
           default:
@@ -180,14 +178,13 @@ export class TasksComponent implements OnInit, OnDestroy {
         switch (direction) {
           case 'asc':
             tasks.sort(function (a, b) {
-              // @ts-ignore
-              return (a.createdAt < b.createdAt) ? -1 : ((a.createdAt > b.createdAt) ? 1 : 0);
+              return ((a.createdAt || '') < (b.createdAt || '')) ? -1 : (((a.createdAt || '') > (b.createdAt || '')) ? 1 : 0);
             });
             break
           case 'desc':
             tasks.sort(function (a, b) {
               // @ts-ignore
-              return (a.createdAt > b.createdAt) ? -1 : ((a.createdAt < b.createdAt) ? 1 : 0);
+              return ((a.createdAt || '') > (b.createdAt || '')) ? -1 : (((a.createdAt || '') < (b.createdAt || '')) ? 1 : 0);
             });
             break
           default:
