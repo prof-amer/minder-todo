@@ -38,13 +38,27 @@ export class TasksComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.isLoading = true;
     this.tasksService.getTasks().subscribe(
       (response: Task[]) => {
-        this.notStarted = response.filter(task => task.status === 'NotStarted');
-        this.inProgress = response.filter(task => task.status === 'InProgress');
-        this.completed = response.filter(task => task.status === 'Completed');
+        if (localStorage.getItem('notStarted')) {
+          this.notStarted = JSON.parse(localStorage.getItem('notStarted') || "")
+        } else {
+          this.notStarted = response.filter(task => task.status === 'NotStarted');
+        }
+        if (localStorage.getItem('inProgress')) {
+          this.inProgress = JSON.parse(localStorage.getItem('inProgress') || "")
+        } else {
+          this.inProgress  = response.filter(task => task.status === 'InProgress');
+        }
+        if (localStorage.getItem('completed')) {
+          this.completed = JSON.parse(localStorage.getItem('completed') || "")
+        } else {
+          this.completed = response.filter(task => task.status === 'Completed');
+        }
+        localStorage.setItem('notStarted', JSON.stringify(this.notStarted));
+        localStorage.setItem('inProgress', JSON.stringify(this.inProgress));
+        localStorage.setItem('completed', JSON.stringify(this.completed));
         this.isLoading = false;
       }
     )
