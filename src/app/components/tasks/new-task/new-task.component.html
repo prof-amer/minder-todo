@@ -21,7 +21,9 @@
         <mat-radio-button class="me-2" value="InProgress">In Progress</mat-radio-button>
         <mat-radio-button value="Completed">Completed</mat-radio-button>
       </div>
-      <mat-error class="error-message" *ngIf="form.get('status')?.touched && form.get('status')?.invalid">Status is required</mat-error>
+      <mat-error class="error-message" *ngIf="form.get('status')?.touched && form.get('status')?.invalid">Status is
+        required
+      </mat-error>
     </mat-radio-group>
 
     <div class="d-flex flex-row m-2 mb-4" formGroupName="dueDate">
