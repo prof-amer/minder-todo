@@ -11,15 +11,19 @@ The frontend of the web application is built using Angular. The application cons
 
 ## Getting Started
 
-### Prerequisites
-
 ### Installation
 
+📦 Install
+* npm
+ ```sh
+  npm install
+  ```
+* Docker
+ ```sh
+  docker build -t minder-todo:1.0 .
+  ```
+ ```sh
+  docker run -d -p 4200:80 <image ID>
+  ```
+
 ## Usage
-
-## Roadmap
-
-- [ ] Construct the frontend
-  - [ ] Create the basic components
-  - [ ] Consume the API service and display the input
-  - [ ] Add styling
