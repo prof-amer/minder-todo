@@ -28,6 +28,7 @@ The frontend of the web application is built using Angular. The application cons
 
 ## Usage
 * Adding Task
-https://user-images.githubusercontent.com/63526142/191202093-e006ed2c-776b-42c6-8453-31e645a095e6.mp4
+![adding-task](https://user-images.githubusercontent.com/63526142/191202767-38d65fd2-9855-433b-9d50-a212733cf6cc.gif)
+
 
 
