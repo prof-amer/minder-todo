@@ -1,7 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TasksService } from './tasks.service';
-import { Task } from './Task'
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Task } from './Task';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { NewTaskComponent } from './new-task/new-task.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
@@ -11,7 +15,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.css']
+  styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
@@ -30,66 +34,76 @@ export class TasksComponent implements OnInit, OnDestroy {
   startX: number = 0;
   startY: number = 0;
 
-  sortOptions = ['Due Date: Nearest', 'Due Date: Furthest', 'Created at: Newest', 'Created at: Oldest']
+  sortOptions = [
+    'Due Date: Nearest',
+    'Due Date: Furthest',
+    'Created at: Newest',
+    'Created at: Oldest',
+  ];
   sortNotStartedButtonText: string = 'Sort By';
   sortInProgressButtonText: string = 'Sort By';
   sortCompletedButtonText: string = 'Sort By';
 
-
-  constructor(
-    private tasksService: TasksService,
-    public dialog: MatDialog
-  ) {
-  }
+  constructor(private tasksService: TasksService, public dialog: MatDialog) {}
 
   ngOnDestroy(): void {
-    this.subs.forEach(sub => sub.unsubscribe());
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 
   ngOnInit(): void {
     this.isLoading = true;
-    const sub1 = this.tasksService.getTasks().subscribe(
-      (response: Task[]) => {
-        if (localStorage.getItem('notStarted')) {
-          this.notStarted = JSON.parse(localStorage.getItem('notStarted') || '')
-        } else {
-          this.notStarted = response.filter(task => task.status === 'NotStarted');
-        }
-        if (localStorage.getItem('inProgress')) {
-          this.inProgress = JSON.parse(localStorage.getItem('inProgress') || '')
-        } else {
-          this.inProgress = response.filter(task => task.status === 'InProgress');
-        }
-        if (localStorage.getItem('completed')) {
-          this.completed = JSON.parse(localStorage.getItem('completed') || '')
-        } else {
-          this.completed = response.filter(task => task.status === 'Completed');
-        }
-        this.saveToDatabase()
-        this.isLoading = false;
+    const sub1 = this.tasksService.getTasks().subscribe((response: Task[]) => {
+      if (localStorage.getItem('notStarted')) {
+        this.notStarted = JSON.parse(localStorage.getItem('notStarted') || '');
+      } else {
+        this.notStarted = response.filter(
+          (task) => task.status === 'NotStarted'
+        );
       }
-    )
+      if (localStorage.getItem('inProgress')) {
+        this.inProgress = JSON.parse(localStorage.getItem('inProgress') || '');
+      } else {
+        this.inProgress = response.filter(
+          (task) => task.status === 'InProgress'
+        );
+      }
+      if (localStorage.getItem('completed')) {
+        this.completed = JSON.parse(localStorage.getItem('completed') || '');
+      } else {
+        this.completed = response.filter((task) => task.status === 'Completed');
+      }
+      this.saveToDatabase();
+      this.isLoading = false;
+    });
     this.subs.push(sub1);
   }
 
   openDialog(): void {
     this.dialog.open(NewTaskComponent, {
-      position: {top: '11rem'},
+      position: { top: '11rem' },
       width: '25vw',
-      data: {notStarted: this.notStarted, inProgress: this.inProgress, completed: this.completed}
+      data: {
+        notStarted: this.notStarted,
+        inProgress: this.inProgress,
+        completed: this.completed,
+      },
     });
   }
 
   drop(event: CdkDragDrop<Task[]>, status: string) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
       this.saveToDatabase();
     } else {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
       event.container.data[event.currentIndex].status = status;
       this.saveToDatabase();
@@ -97,14 +111,14 @@ export class TasksComponent implements OnInit, OnDestroy {
     // notify user that tasks are no longer correctly sorted
     switch (status) {
       case 'NotStarted':
-        this.sortNotStartedButtonText = 'Sort By'
-        break
+        this.sortNotStartedButtonText = 'Sort By';
+        break;
       case 'InProgress':
-        this.sortInProgressButtonText = 'Sort By'
-        break
+        this.sortInProgressButtonText = 'Sort By';
+        break;
       case 'Completed':
-        this.sortCompletedButtonText = 'Sort By'
-        break
+        this.sortCompletedButtonText = 'Sort By';
+        break;
     }
   }
 
@@ -117,7 +131,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.editMode = true;
     this.updateID = index;
     this.updateGroup = tasks;
-    const {name, description, status, dueDate, createdAt} = tasks[index]
+    const { name, description, status, dueDate, createdAt } = tasks[index];
     this.dialog.open(NewTaskComponent, {
       width: '25vw',
       data: {
@@ -131,8 +145,8 @@ export class TasksComponent implements OnInit, OnDestroy {
         completed: this.completed,
         updateID: this.updateID,
         updateGroup: this.updateGroup,
-        edit: true
-      }
+        edit: true,
+      },
     });
   }
 
@@ -145,18 +159,18 @@ export class TasksComponent implements OnInit, OnDestroy {
     const diffX = Math.abs(event.pageX - this.startX);
     const diffY = Math.abs(event.pageY - this.startY);
     if (diffX > this.delta || diffY > this.delta) {
-      panel.toggle()
+      panel.toggle();
     }
   }
 
   sortTasks(tasks: Task[], sortFilter: string, direction: string) {
     if (sortFilter === 'Due Date') {
       tasks.map((obj) => {
-        return {...obj, date: DateTime.fromISO(<string>obj.dueDate)};
+        return { ...obj, date: DateTime.fromISO(<string>obj.dueDate) };
       });
     } else {
       tasks.map((obj) => {
-        return {...obj, date: DateTime.fromISO(<string>obj.createdAt)};
+        return { ...obj, date: DateTime.fromISO(<string>obj.createdAt) };
       });
     }
     switch (sortFilter) {
@@ -164,14 +178,22 @@ export class TasksComponent implements OnInit, OnDestroy {
         switch (direction) {
           case 'asc':
             tasks.sort(function (a, b) {
-              return ((a.dueDate || '') < (b.dueDate || '')) ? -1 : (((a.dueDate || '') > (b.dueDate || '')) ? 1 : 0);
+              return (a.dueDate || '') < (b.dueDate || '')
+                ? -1
+                : (a.dueDate || '') > (b.dueDate || '')
+                ? 1
+                : 0;
             });
-            break
+            break;
           case 'desc':
             tasks.sort(function (a, b) {
-              return ((a.dueDate || '') > (b.dueDate || '')) ? -1 : (((a.dueDate || '') < (b.dueDate || '')) ? 1 : 0);
+              return (a.dueDate || '') > (b.dueDate || '')
+                ? -1
+                : (a.dueDate || '') < (b.dueDate || '')
+                ? 1
+                : 0;
             });
-            break
+            break;
           default:
           // error handling
         }
@@ -180,14 +202,22 @@ export class TasksComponent implements OnInit, OnDestroy {
         switch (direction) {
           case 'asc':
             tasks.sort(function (a, b) {
-              return ((a.createdAt || '') < (b.createdAt || '')) ? -1 : (((a.createdAt || '') > (b.createdAt || '')) ? 1 : 0);
+              return (a.createdAt || '') < (b.createdAt || '')
+                ? -1
+                : (a.createdAt || '') > (b.createdAt || '')
+                ? 1
+                : 0;
             });
-            break
+            break;
           case 'desc':
             tasks.sort(function (a, b) {
-              return ((a.createdAt || '') > (b.createdAt || '')) ? -1 : (((a.createdAt || '') < (b.createdAt || '')) ? 1 : 0);
+              return (a.createdAt || '') > (b.createdAt || '')
+                ? -1
+                : (a.createdAt || '') < (b.createdAt || '')
+                ? 1
+                : 0;
             });
-            break
+            break;
           default:
             // error handling
             break;
@@ -198,27 +228,27 @@ export class TasksComponent implements OnInit, OnDestroy {
   onSelectSort(option: string, tasks: Task[], container: string) {
     switch (container) {
       case 'Not Started':
-        this.sortNotStartedButtonText = option
-        break
+        this.sortNotStartedButtonText = option;
+        break;
       case 'In Progress':
-        this.sortInProgressButtonText = option
-        break
+        this.sortInProgressButtonText = option;
+        break;
       case 'Completed':
-        this.sortCompletedButtonText = option
-        break
+        this.sortCompletedButtonText = option;
+        break;
     }
     switch (option) {
       case 'Due Date: Nearest':
-        this.sortTasks(tasks, 'Due Date', 'asc')
+        this.sortTasks(tasks, 'Due Date', 'asc');
         break;
       case 'Due Date: Furthest':
-        this.sortTasks(tasks, 'Due Date', 'desc')
+        this.sortTasks(tasks, 'Due Date', 'desc');
         break;
       case 'Created at: Newest':
-        this.sortTasks(tasks, 'Created at', 'desc')
+        this.sortTasks(tasks, 'Created at', 'desc');
         break;
       case 'Created at: Oldest':
-        this.sortTasks(tasks, 'Created at', 'asc')
+        this.sortTasks(tasks, 'Created at', 'asc');
         break;
     }
   }
