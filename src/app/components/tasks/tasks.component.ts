@@ -72,7 +72,11 @@ export class TasksComponent implements OnInit, OnDestroy {
       } else {
         this.completed = response.filter((task) => task.status === 'Completed');
       }
-      this.saveToDatabase();
+      this.tasksService.saveToDatabase(
+        this.notStarted,
+        this.inProgress,
+        this.completed
+      );
       this.isLoading = false;
     });
     this.subs.push(sub1);
@@ -97,7 +101,11 @@ export class TasksComponent implements OnInit, OnDestroy {
         event.previousIndex,
         event.currentIndex
       );
-      this.saveToDatabase();
+      this.tasksService.saveToDatabase(
+        this.notStarted,
+        this.inProgress,
+        this.completed
+      );
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -106,7 +114,11 @@ export class TasksComponent implements OnInit, OnDestroy {
         event.currentIndex
       );
       event.container.data[event.currentIndex].status = status;
-      this.saveToDatabase();
+      this.tasksService.saveToDatabase(
+        this.notStarted,
+        this.inProgress,
+        this.completed
+      );
     }
     // notify user that tasks are no longer correctly sorted
     switch (status) {
@@ -124,7 +136,11 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   deleteTask(tasks: Task[], index: number) {
     tasks.splice(index, 1);
-    this.saveToDatabase();
+    this.tasksService.saveToDatabase(
+      this.notStarted,
+      this.inProgress,
+      this.completed
+    );
   }
 
   onEdit(tasks: Task[], index: number) {
@@ -249,12 +265,5 @@ export class TasksComponent implements OnInit, OnDestroy {
         this.sortTasks(tasks, 'Created at', 'asc');
         break;
     }
-  }
-
-  // mock save to db
-  saveToDatabase() {
-    localStorage.setItem('notStarted', JSON.stringify(this.notStarted));
-    localStorage.setItem('inProgress', JSON.stringify(this.inProgress));
-    localStorage.setItem('completed', JSON.stringify(this.completed));
   }
 }
