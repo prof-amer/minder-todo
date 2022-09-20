@@ -10,7 +10,7 @@ import { Task } from './Task'
 export class TasksService extends HttpClient {
   private api = environment.api;
 
-  getTasks(): Observable<Task[]>{
+  getTasks(): Observable<Task[]> {
     return this.get<Task[]>(this.api)
   }
 
