@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DateTime } from 'luxon';
+import { TasksService } from '../tasks.service';
 
 @Component({
   selector: 'app-new-task',
@@ -19,7 +20,8 @@ export class NewTaskComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<NewTaskComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private tasksService: TasksService
   ) {}
 
   ngOnInit(): void {
@@ -90,9 +92,11 @@ export class NewTaskComponent implements OnInit {
       }
       this.data.updateGroup.splice(this.data.updateID, 1);
     }
-    localStorage.setItem('notStarted', JSON.stringify(this.data.notStarted));
-    localStorage.setItem('inProgress', JSON.stringify(this.data.inProgress));
-    localStorage.setItem('completed', JSON.stringify(this.data.completed));
+    this.tasksService.saveToDatabase(
+      this.data.notStarted,
+      this.data.inProgress,
+      this.data.completed
+    );
     this.dialogRef.close();
     formDirective.resetForm({});
   }
@@ -109,10 +113,6 @@ export class NewTaskComponent implements OnInit {
           createdAt,
           dueDate,
         });
-        localStorage.setItem(
-          'notStarted',
-          JSON.stringify(this.data.notStarted)
-        );
         break;
       case 'InProgress':
         this.data.inProgress.push({
@@ -122,10 +122,6 @@ export class NewTaskComponent implements OnInit {
           createdAt,
           dueDate,
         });
-        localStorage.setItem(
-          'inProgress',
-          JSON.stringify(this.data.inProgress)
-        );
         break;
       case 'Completed':
         this.data.completed.push({
@@ -135,9 +131,13 @@ export class NewTaskComponent implements OnInit {
           createdAt,
           dueDate,
         });
-        localStorage.setItem('completed', JSON.stringify(this.data.completed));
         break;
     }
+    this.tasksService.saveToDatabase(
+      this.data.notStarted,
+      this.data.inProgress,
+      this.data.completed
+    );
   }
 
   parseForm() {
