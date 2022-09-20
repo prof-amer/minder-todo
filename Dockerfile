@@ -1,9 +1,9 @@
 # Stage 1
 FROM node:latest as build
 
-WORKDIR /app
+WORKDIR /usr/local/app
 
-COPY package*.json ./
+COPY ./ /usr/local/app/
 
 RUN npm install
 
@@ -12,8 +12,8 @@ RUN npm run build
 # Stage 2
 FROM nginx:latest
 
-COPY --from=build . .
+COPY --from=build /usr/local/app/dist/minder-todo /usr/share/nginx/html
 
-EXPOSE 8080
+EXPOSE 80
 
-CMD ["npm","start"]
+# run at 4200
