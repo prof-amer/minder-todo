@@ -1,26 +1,34 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormGroupDirective,
+  Validators,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-new-task',
   templateUrl: './new-task.component.html',
-  styleUrls: ['./new-task.component.css']
+  styleUrls: ['./new-task.component.css'],
 })
 export class NewTaskComponent implements OnInit {
-  form !: FormGroup;
+  form!: FormGroup;
   isLoading: boolean = false;
 
-  constructor(private fb: FormBuilder,
-              public dialogRef: MatDialogRef<NewTaskComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
-  }
+  constructor(
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<NewTaskComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   ngOnInit(): void {
     if (this.data.dueDate) {
-      this.data.date = DateTime.fromISO(this.data.dueDate).toISODate()
-      this.data.dueTime = DateTime.fromISO(this.data.dueDate).toLocaleString(DateTime.TIME_SIMPLE)
+      this.data.date = DateTime.fromISO(this.data.dueDate).toISODate();
+      this.data.dueTime = DateTime.fromISO(this.data.dueDate).toLocaleString(
+        DateTime.TIME_SIMPLE
+      );
     }
     this.form = this.fb.group({
       name: this.fb.control(this.data.name || null, [Validators.required]),
@@ -29,7 +37,7 @@ export class NewTaskComponent implements OnInit {
       dueDate: this.fb.group({
         date: this.fb.control(this.data.date || null),
         time: this.fb.control(this.data.dueTime || null),
-      })
+      }),
     });
     if (this.data.dueTime) {
       this.form.get('dueDate.date')?.setValidators([Validators.required]);
@@ -43,7 +51,7 @@ export class NewTaskComponent implements OnInit {
     }
     this.submitTask();
     this.dialogRef.close();
-    formDirective.resetForm({})
+    formDirective.resetForm({});
   }
 
   editTask(formDirective: FormGroupDirective) {
@@ -52,53 +60,89 @@ export class NewTaskComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    const createdAt = this.data.createdAt
-    const [name, description, status, dueDate] = this.parseForm()
-    const previousStatus = this.data.updateGroup[this.data.updateID].status
+    const createdAt = this.data.createdAt;
+    const [name, description, status, dueDate] = this.parseForm();
+    const previousStatus = this.data.updateGroup[this.data.updateID].status;
     if (this.data.updateID !== null && this.data.updateID !== undefined) {
-      this.data.updateGroup[this.data.updateID] = {name, description, status, dueDate, createdAt}
+      this.data.updateGroup[this.data.updateID] = {
+        name,
+        description,
+        status,
+        dueDate,
+        createdAt,
+      };
     }
     if (status !== previousStatus) {
       switch (status) {
         case 'NotStarted':
-          this.data.notStarted.unshift(this.data.updateGroup[this.data.updateID]);
-          break
+          this.data.notStarted.unshift(
+            this.data.updateGroup[this.data.updateID]
+          );
+          break;
         case 'InProgress':
-          this.data.inProgress.unshift(this.data.updateGroup[this.data.updateID]);
-          break
+          this.data.inProgress.unshift(
+            this.data.updateGroup[this.data.updateID]
+          );
+          break;
         case 'Completed':
-          this.data.completed.unshift(this.data.updateGroup[this.data.updateID]);
-          break
+          this.data.completed.unshift(
+            this.data.updateGroup[this.data.updateID]
+          );
+          break;
         default:
         // error handling
       }
-      this.data.updateGroup.splice(this.data.updateID, 1)
+      this.data.updateGroup.splice(this.data.updateID, 1);
     }
     localStorage.setItem('notStarted', JSON.stringify(this.data.notStarted));
     localStorage.setItem('inProgress', JSON.stringify(this.data.inProgress));
     localStorage.setItem('completed', JSON.stringify(this.data.completed));
     this.dialogRef.close();
-    formDirective.resetForm({})
+    formDirective.resetForm({});
     this.isLoading = false;
   }
 
   submitTask() {
     this.isLoading = true;
     const createdAt = new Date().toISOString();
-    const [name, description, status, dueDate] = this.parseForm()
+    const [name, description, status, dueDate] = this.parseForm();
     switch (status) {
       case 'NotStarted':
-        this.data.notStarted.push({name, description, status, createdAt, dueDate})
-        localStorage.setItem('notStarted', JSON.stringify(this.data.notStarted));
-        break
+        this.data.notStarted.push({
+          name,
+          description,
+          status,
+          createdAt,
+          dueDate,
+        });
+        localStorage.setItem(
+          'notStarted',
+          JSON.stringify(this.data.notStarted)
+        );
+        break;
       case 'InProgress':
-        this.data.inProgress.push({name, description, status, createdAt, dueDate})
-        localStorage.setItem('inProgress', JSON.stringify(this.data.inProgress));
-        break
+        this.data.inProgress.push({
+          name,
+          description,
+          status,
+          createdAt,
+          dueDate,
+        });
+        localStorage.setItem(
+          'inProgress',
+          JSON.stringify(this.data.inProgress)
+        );
+        break;
       case 'Completed':
-        this.data.completed.push({name, description, status, createdAt, dueDate})
+        this.data.completed.push({
+          name,
+          description,
+          status,
+          createdAt,
+          dueDate,
+        });
         localStorage.setItem('completed', JSON.stringify(this.data.completed));
-        break
+        break;
       default:
       // error handling
     }
@@ -106,29 +150,29 @@ export class NewTaskComponent implements OnInit {
   }
 
   parseForm() {
-    const {name, description, status} = this.form.value;
+    const { name, description, status } = this.form.value;
     let dueDate = this.form.get('dueDate')?.value;
     if (dueDate.date) {
-      dueDate.date = DateTime.fromFormat(dueDate.date, 'yyyy-MM-dd')
+      dueDate.date = DateTime.fromFormat(dueDate.date, 'yyyy-MM-dd');
       if (dueDate.time) {
         const [hh, mm] = dueDate.time.split(':');
-        dueDate.date = dueDate.date.set({hour: hh, minute: mm})
+        dueDate.date = dueDate.date.set({ hour: hh, minute: mm });
       }
-      dueDate = dueDate.date.toUTC().toISO()
-      return [name, description, status, dueDate]
+      dueDate = dueDate.date.toUTC().toISO();
+      return [name, description, status, dueDate];
     }
-    return [name, description, status, null]
+    return [name, description, status, null];
   }
 
   // set date as required when time is set
   setDateRequired() {
     if (this.form.get('dueDate.time')?.value) {
-      this.form.get('dueDate.date')?.setValidators([Validators.required])
-      this.form.get('dueDate.date')?.updateValueAndValidity()
-      this.form.get('dueDate.date')?.markAsTouched()
+      this.form.get('dueDate.date')?.setValidators([Validators.required]);
+      this.form.get('dueDate.date')?.updateValueAndValidity();
+      this.form.get('dueDate.date')?.markAsTouched();
     } else {
-      this.form.get('dueDate.date')?.removeValidators([Validators.required])
-      this.form.get('dueDate.date')?.updateValueAndValidity()
+      this.form.get('dueDate.date')?.removeValidators([Validators.required]);
+      this.form.get('dueDate.date')?.updateValueAndValidity();
     }
   }
 }
