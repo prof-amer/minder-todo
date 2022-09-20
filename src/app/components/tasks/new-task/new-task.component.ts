@@ -15,7 +15,6 @@ import { DateTime } from 'luxon';
 })
 export class NewTaskComponent implements OnInit {
   form!: FormGroup;
-  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -59,7 +58,6 @@ export class NewTaskComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    this.isLoading = true;
     const createdAt = this.data.createdAt;
     const [name, description, status, dueDate] = this.parseForm();
     const previousStatus = this.data.updateGroup[this.data.updateID].status;
@@ -89,8 +87,6 @@ export class NewTaskComponent implements OnInit {
             this.data.updateGroup[this.data.updateID]
           );
           break;
-        default:
-        // error handling
       }
       this.data.updateGroup.splice(this.data.updateID, 1);
     }
@@ -99,11 +95,9 @@ export class NewTaskComponent implements OnInit {
     localStorage.setItem('completed', JSON.stringify(this.data.completed));
     this.dialogRef.close();
     formDirective.resetForm({});
-    this.isLoading = false;
   }
 
   submitTask() {
-    this.isLoading = true;
     const createdAt = new Date().toISOString();
     const [name, description, status, dueDate] = this.parseForm();
     switch (status) {
@@ -143,10 +137,7 @@ export class NewTaskComponent implements OnInit {
         });
         localStorage.setItem('completed', JSON.stringify(this.data.completed));
         break;
-      default:
-      // error handling
     }
-    this.isLoading = false;
   }
 
   parseForm() {
@@ -165,6 +156,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   // set date as required when time is set
+  // prevent time without date which is invalid
   setDateRequired() {
     if (this.form.get('dueDate.time')?.value) {
       this.form.get('dueDate.date')?.setValidators([Validators.required]);
