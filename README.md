@@ -28,4 +28,4 @@ The frontend of the web application is built using Angular. The application cons
 
 ## Usage
 * Adding Task
-
+![](add-task.mp4)
