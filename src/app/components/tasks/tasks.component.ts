@@ -18,16 +18,18 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   editMode: boolean = false;
   isLoading: boolean = false;
+
   notStarted: Task[] = [];
   inProgress: Task[] = [];
   completed: Task[] = [];
+
   updateID: number | undefined;
   updateGroup: Task[] = [];
 
-
   delta: number = 6;
-  startX: number = 0
-  startY: number = 0
+  startX: number = 0;
+  startY: number = 0;
+
   sortOptions = ['Due Date: Nearest', 'Due Date: Furthest', 'Created at: Newest', 'Created at: Oldest']
   sortNotStartedButtonText: string = 'Sort By';
   sortInProgressButtonText: string = 'Sort By';
@@ -42,7 +44,7 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.forEach(sub => sub.unsubscribe());
-    }
+  }
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -56,7 +58,7 @@ export class TasksComponent implements OnInit, OnDestroy {
         if (localStorage.getItem('inProgress')) {
           this.inProgress = JSON.parse(localStorage.getItem('inProgress') || '')
         } else {
-          this.inProgress  = response.filter(task => task.status === 'InProgress');
+          this.inProgress = response.filter(task => task.status === 'InProgress');
         }
         if (localStorage.getItem('completed')) {
           this.completed = JSON.parse(localStorage.getItem('completed') || '')
@@ -222,7 +224,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   // mock save to db
-  saveToDatabase(){
+  saveToDatabase() {
     localStorage.setItem('notStarted', JSON.stringify(this.notStarted));
     localStorage.setItem('inProgress', JSON.stringify(this.inProgress));
     localStorage.setItem('completed', JSON.stringify(this.completed));
