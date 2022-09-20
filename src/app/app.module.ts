@@ -20,14 +20,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { NewTaskComponent } from './components/tasks/new-task/new-task.component';
 import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
 import { MatMenuModule } from '@angular/material/menu';
+import { AppRoutingModule } from './app-routing-module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthComponent,
-    TasksComponent,
-    NewTaskComponent
-  ],
+  declarations: [AppComponent, AuthComponent, TasksComponent, NewTaskComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -45,10 +41,10 @@ import { MatMenuModule } from '@angular/material/menu';
     MatExpansionModule,
     MatDialogModule,
     MatLuxonDateModule,
-    MatMenuModule
+    MatMenuModule,
+    AppRoutingModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
