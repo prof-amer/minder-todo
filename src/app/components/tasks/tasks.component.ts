@@ -150,6 +150,8 @@ export class TasksComponent implements OnInit, OnDestroy {
     });
   }
 
+  // previousLocation and currentLocation are used together
+  // differentiate between clicking and dragging to prevent unnecessary expansion of panel
   previousLocation(event: MouseEvent) {
     this.startX = event.pageX;
     this.startY = event.pageY;
@@ -194,8 +196,6 @@ export class TasksComponent implements OnInit, OnDestroy {
                 : 0;
             });
             break;
-          default:
-          // error handling
         }
         break;
       case 'Created at':
@@ -218,10 +218,8 @@ export class TasksComponent implements OnInit, OnDestroy {
                 : 0;
             });
             break;
-          default:
-            // error handling
-            break;
         }
+        break;
     }
   }
 
