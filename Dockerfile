@@ -3,7 +3,7 @@ FROM node:latest as build
 
 WORKDIR /app
 
-COPY .package*.json ./
+COPY package*.json ./
 
 RUN npm install
 
@@ -14,6 +14,6 @@ FROM nginx:latest
 
 COPY --from=build . .
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD ["npm","start"]
